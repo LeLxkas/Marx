@@ -1,0 +1,3 @@
+[submodule "Marx\\vendor\\spdlog"]
+	path = Marx\\vendor\\spdlog
+	url = https://github.com/gabime/spdlog

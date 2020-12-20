@@ -22,19 +22,7 @@
     <ClInclude Include="src\Marx\EntryPoint.h">
       <Filter>Marx</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marx\Events\Application.h">
-      <Filter>Marx\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Events\Controller.h">
-      <Filter>Marx\Events</Filter>
-    </ClInclude>
     <ClInclude Include="src\Marx\Events\Event.h">
-      <Filter>Marx\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Events\Keyboard.h">
-      <Filter>Marx\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Events\Mouse.h">
       <Filter>Marx\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Marx\Exceptions\ExceptionMacros.h">
@@ -50,6 +38,18 @@
       <Filter>Marx</Filter>
     </ClInclude>
     <ClInclude Include="src\mxpch.h" />
+    <ClInclude Include="src\Marx\Events\WindowEvents.h">
+      <Filter>Marx\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Events\ControllerEvents.h">
+      <Filter>Marx\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Events\KeyboardEvents.h">
+      <Filter>Marx\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Events\MouseEvents.h">
+      <Filter>Marx\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">

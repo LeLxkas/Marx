@@ -8,7 +8,8 @@ namespace Marx
 	class WindowCloseEvent : public Event
 	{
 	public:
-		WindowCloseEvent()
+		WindowCloseEvent(Window* pWnd)
+			: Event(pWnd)
 		{}
 
 		EVENT_CLASS_FLAGS(EventFlagApplication)
@@ -18,8 +19,8 @@ namespace Marx
 	class WindowResizeEvent : public Event
 	{
 	public:
-		WindowResizeEvent(unsigned int width, unsigned int height)
-			: m_width(width), m_height(height)
+		WindowResizeEvent(Window* pWnd, unsigned int width, unsigned int height)
+			: Event(pWnd), m_width(width), m_height(height)
 		{}
 	public:
 		inline unsigned int getWidth() const { return m_width; }
@@ -42,7 +43,8 @@ namespace Marx
 	class WindowFocusEvent : public Event
 	{
 	public:
-		WindowFocusEvent()
+		WindowFocusEvent(Window* pWnd)
+			: Event(pWnd)
 		{}
 
 		EVENT_CLASS_FLAGS(EventFlagApplication)
@@ -52,7 +54,8 @@ namespace Marx
 	class WindowFocusLossEvent : public Event
 	{
 	public:
-		WindowFocusLossEvent()
+		WindowFocusLossEvent(Window* pWnd)
+			: Event(pWnd)
 		{}
 
 		EVENT_CLASS_FLAGS(EventFlagApplication)

@@ -7,6 +7,8 @@
 
 namespace Marx
 {
+	static bool s_windowClassInitialized = false;
+
 	struct WindowDesc
 	{
 		std::string title;
@@ -27,15 +29,15 @@ namespace Marx
 		static Window* create(const WindowDesc& desc = WindowDesc());
 		~Window();
 	public:
+		void shutdown();
+		void setEventCallback(const EventCallbackFunc& callback) { m_eventCallback = callback; }
+	public:
 		void onUpdate();
 		unsigned int getWidth() const { return m_width; };
 		unsigned int getHeight() const { return m_height; };
-
-		// Window attributes
-		void setEventCallback(const EventCallbackFunc& callback) { m_eventCallback = callback; }
+		static unsigned int getCount() { return s_windowCount; }
 	private:
 		void init(const WindowDesc& desc);
-		void shutdown();
 	private:
 		Window(const WindowDesc& desc);
 	private:
@@ -51,8 +53,16 @@ namespace Marx
 		EventCallbackFunc m_eventCallback;
 		REENABLE_DLL_INTERFACE_WARN;
 	private:
-		class WindowManager
+		static int s_windowCount;
+	private:
+		class Manager
 		{
+		public:
+			enum class Procedure
+			{
+				Setup,
+				Default
+			};
 		public:
 			static bool init();
 			static bool shutdown();
@@ -60,9 +70,11 @@ namespace Marx
 			static const char* getName();
 			static void registerWindow(HWND hWnd, Window* pWnd);
 			static void unregisterWindow(HWND hWnd);
+			static void setProcedure(Procedure proc = Procedure::Default, HWND hWnd = nullptr);
 		public:
 			static std::optional<int> handleMessages();
 		private:
+			static LRESULT CALLBACK wndProcSetup(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 			static LRESULT CALLBACK wndProcForward(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 		private:
 			static WNDCLASS m_wc;

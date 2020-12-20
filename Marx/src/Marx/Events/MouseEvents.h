@@ -17,8 +17,8 @@ namespace Marx
 	class MARX_API MouseMoveEvent : public Event
 	{
 	public:
-		MouseMoveEvent(float x, float y)
-			: m_x(x), m_y(y)
+		MouseMoveEvent(Window* pWnd, float x, float y)
+			: Event(pWnd), m_x(x), m_y(y)
 		{}
 	public:
 		inline float getX() const { return m_x; }
@@ -41,8 +41,8 @@ namespace Marx
 	class MARX_API MouseScrollEvent : public Event
 	{
 	public:
-		MouseScrollEvent(float delta)
-			: m_delta(delta)
+		MouseScrollEvent(Window* pWnd, float delta)
+			: Event(pWnd), m_delta(delta)
 		{}
 	public:
 		inline float getDelta() const { return m_delta; }
@@ -63,8 +63,8 @@ namespace Marx
 	class MARX_API MouseHScrollEvent : public Event
 	{
 	public:
-		MouseHScrollEvent(float delta)
-			: m_delta(delta)
+		MouseHScrollEvent(Window* pWnd, float delta)
+			: Event(pWnd), m_delta(delta)
 		{}
 	public:
 		inline float getDelta() const { return m_delta; }
@@ -89,8 +89,8 @@ namespace Marx
 
 		EVENT_CLASS_FLAGS(EventFlagInput | EventFlagMouse | EventFlagMouseButton)
 	protected:
-		MouseButtonEvent(MouseButton button)
-			: m_button(button)
+		MouseButtonEvent(Window* pWnd, MouseButton button)
+			: Event(pWnd), m_button(button)
 		{}
 	protected:
 		MouseButton m_button;
@@ -99,8 +99,8 @@ namespace Marx
 	class MARX_API MouseButtonPressEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressEvent(MouseButton button)
-			: MouseButtonEvent(button)
+		MouseButtonPressEvent(Window* pWnd, MouseButton button)
+			: MouseButtonEvent(pWnd, button)
 		{}
 	public:
 		std::string toString() const override
@@ -116,8 +116,8 @@ namespace Marx
 	class MARX_API MouseButtonReleaseEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleaseEvent(MouseButton button)
-			: MouseButtonEvent(button)
+		MouseButtonReleaseEvent(Window* pWnd, MouseButton button)
+			: MouseButtonEvent(pWnd, button)
 		{}
 	public:
 		std::string toString() const override

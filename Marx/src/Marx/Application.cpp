@@ -12,6 +12,9 @@ namespace Marx
 	{
 		m_window = std::unique_ptr<Window>(Window::create());
 		m_window->setEventCallback(BIND_EVENT_FUNC(Application::onEvent));
+
+		m_window1 = std::unique_ptr<Window>(Window::create());
+		m_window1->setEventCallback(BIND_EVENT_FUNC(Application::onEvent));
 	}
 
 	Application::~Application()
@@ -36,7 +39,11 @@ namespace Marx
 
 	bool Application::onWindowClose(WindowCloseEvent& e)
 	{
-		m_running = false;
+		e.getWnd()->shutdown();
+		if (Window::getCount() == 0)
+		{
+			m_running = false;
+		}
 		return true;
 	}
 }

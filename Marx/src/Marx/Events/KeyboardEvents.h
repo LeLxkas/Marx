@@ -12,8 +12,8 @@ namespace Marx
 
 		EVENT_CLASS_FLAGS(EventFlagInput | EventFlagKeyboard)
 	protected:
-		KeyEvent(int keyCode)
-			: m_keyCode(keyCode)
+		KeyEvent(Window* pWnd, int keyCode)
+			: Event(pWnd), m_keyCode(keyCode)
 		{}
 	protected:
 		int m_keyCode;
@@ -22,8 +22,8 @@ namespace Marx
 	class MARX_API KeyPressEvent : public KeyEvent
 	{
 	public:
-		KeyPressEvent(int keyCode, int repeatCount)
-			: KeyEvent(keyCode), m_repeatCount(repeatCount)
+		KeyPressEvent(Window* pWnd, int keyCode, int repeatCount)
+			: KeyEvent(pWnd, keyCode), m_repeatCount(repeatCount)
 		{}
 	public:
 		int getRepeatCount() const { return m_repeatCount; }
@@ -43,8 +43,8 @@ namespace Marx
 	class MARX_API KeyReleaseEvent : public KeyEvent
 	{
 	public:
-		KeyReleaseEvent(int keyCode)
-			: KeyEvent(keyCode)
+		KeyReleaseEvent(Window* pWnd, int keyCode)
+			: KeyEvent(pWnd, keyCode)
 		{}
 	public:
 		std::string toString() const override

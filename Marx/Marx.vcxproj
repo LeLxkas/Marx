@@ -150,11 +150,11 @@
     <ClInclude Include="src\Marx\Application.h" />
     <ClInclude Include="src\Marx\Core.h" />
     <ClInclude Include="src\Marx\EntryPoint.h" />
-    <ClInclude Include="src\Marx\Events\Application.h" />
-    <ClInclude Include="src\Marx\Events\Controller.h" />
+    <ClInclude Include="src\Marx\Events\WindowEvents.h" />
+    <ClInclude Include="src\Marx\Events\ControllerEvents.h" />
     <ClInclude Include="src\Marx\Events\Event.h" />
-    <ClInclude Include="src\Marx\Events\Keyboard.h" />
-    <ClInclude Include="src\Marx\Events\Mouse.h" />
+    <ClInclude Include="src\Marx\Events\KeyboardEvents.h" />
+    <ClInclude Include="src\Marx\Events\MouseEvents.h" />
     <ClInclude Include="src\Marx\Exceptions\ExceptionMacros.h" />
     <ClInclude Include="src\Marx\Exceptions\MarxException.h" />
     <ClInclude Include="src\Marx\Log.h" />

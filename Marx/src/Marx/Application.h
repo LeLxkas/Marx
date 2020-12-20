@@ -3,7 +3,7 @@
 #include "Core.h"
 #include "Window.h"
 #include "Events/Event.h"
-#include "Marx/Events/Application.h"
+#include "Marx/Events/WindowEvents.h"
 
 namespace Marx
 {
@@ -20,6 +20,7 @@ namespace Marx
 	private:
 		DISABLE_DLL_INTERFACE_WARN;
 		std::unique_ptr<Window> m_window;
+		std::unique_ptr<Window> m_window1;
 		REENABLE_DLL_INTERFACE_WARN;
 		bool m_running = true;
 	};

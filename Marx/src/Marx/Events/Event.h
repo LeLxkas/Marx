@@ -36,9 +36,15 @@ namespace Marx
                                      virtual const char* getName() const override { return #type; }
 	#define EVENT_CLASS_FLAGS(flags) virtual EventFlag getFlags() const override { return flags; }
 
+	class Window;
+
 	class MARX_API Event
 	{
-		friend class EventDispatcher;
+	public:
+		Event() = default;
+		Event(Window* pWnd)
+			: m_pWnd(pWnd)
+		{}
 	public:
 		virtual EventType getType() const = 0;
 		virtual EventFlag getFlags() const = 0;
@@ -49,8 +55,11 @@ namespace Marx
 		{
 			return getFlags() & flag;
 		}
+		Window* getWnd() const { return m_pWnd; }
+	public:
+		bool handled = false;
 	protected:
-		bool m_handled = false;
+		Window* m_pWnd;
 	};
 
 	class MARX_API EventDispatcher
@@ -67,7 +76,7 @@ namespace Marx
 		{
 			if (m_event.getType() == T::getStaticType())
 			{
-				m_event.m_handled = func(*(T*)&m_event);
+				m_event.handled = func(*(T*)&m_event);
 				return true;
 			}
 			return false;

@@ -1,16 +1,15 @@
 #include <Marx.h>
 
-class Sandbox : public Marx::Application {
+class Sandbox : public Marx::Application
+{
 public:
-	Sandbox() {
-		;
-	}
-
-	~Sandbox() {
-		;
-	}
+	Sandbox()
+	{}
+	~Sandbox()
+	{}
 };
 
-Marx::Application* Marx::createApplication() {
+Marx::Application* Marx::createApplication()
+{
 	return new Sandbox();
 }

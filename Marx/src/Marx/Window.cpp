@@ -126,8 +126,8 @@ namespace Marx
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
 		{
-			int repeatCount = LOWORD(lParam);
-			KeyPressEvent event(this, (int)wParam, repeatCount);
+			int isRepeat = (lParam >> 30) & 1;
+			KeyPressEvent event(this, (int)wParam, isRepeat);
 			m_eventCallback(event);
 			break;
 		}

@@ -32,7 +32,7 @@ namespace Marx
 		void shutdown();
 		void setEventCallback(const EventCallbackFunc& callback) { m_eventCallback = callback; }
 	public:
-		void onUpdate();
+		static void onUpdate();
 		unsigned int getWidth() const { return m_width; };
 		unsigned int getHeight() const { return m_height; };
 		static unsigned int getCount() { return s_windowCount; }

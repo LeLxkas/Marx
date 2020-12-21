@@ -124,6 +124,7 @@ namespace Marx
 		}
 		// ---------- KEYBOARD MESSAGES ----------
 		case WM_KEYDOWN:
+		case WM_SYSKEYDOWN:
 		{
 			int repeatCount = LOWORD(lParam);
 			KeyPressEvent event(this, (int)wParam, repeatCount);
@@ -131,8 +132,21 @@ namespace Marx
 			break;
 		}
 		case WM_KEYUP:
+		case WM_SYSKEYUP:
 		{
 			KeyReleaseEvent event(this, (int)wParam);
+			m_eventCallback(event);
+			break;
+		}
+		case WM_SETFOCUS:
+		{
+			WindowFocusEvent event(this);
+			m_eventCallback(event);
+			break;
+		}
+		case WM_KILLFOCUS:
+		{
+			WindowFocusLossEvent event(this);
 			m_eventCallback(event);
 			break;
 		}

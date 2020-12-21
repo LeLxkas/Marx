@@ -12,9 +12,6 @@ namespace Marx
 	{
 		m_window = std::unique_ptr<Window>(Window::create());
 		m_window->setEventCallback(BIND_EVENT_FUNC(Application::onEvent));
-
-		m_window1 = std::unique_ptr<Window>(Window::create());
-		m_window1->setEventCallback(BIND_EVENT_FUNC(Application::onEvent));
 	}
 
 	Application::~Application()
@@ -24,7 +21,7 @@ namespace Marx
 	{
 		while (m_running)
 		{
-			m_window->onUpdate();
+			Window::onUpdate();
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 	}

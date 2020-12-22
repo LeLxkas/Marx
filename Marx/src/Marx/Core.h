@@ -24,6 +24,8 @@
 
 // Bitwise Flag operations
 #define FLAG(f) (1 << f)
-#define SET_FLAG(x, f) (x |= BIT(f))
-#define CLEAR_FLAG(x, f) (x &= ~BIT(f))
-#define HAS_FLAG(x, f) (x & FLAG(f))
+#define SET_FLAG(x, f) (x = f)
+#define ADD_FLAG(x, f) (x |= f)
+#define REM_FLAG(x, f) (x &= ~f)
+#define CLEAR_FLAG(x) (x = 0)
+#define HAS_FLAG(x, f) (x & f)

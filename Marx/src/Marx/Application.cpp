@@ -3,6 +3,7 @@
 #include "Application.h"
 
 #include "Marx/Log.h"
+#include "Marx/Input/ControllerManager.h"
 
 namespace Marx
 {
@@ -12,16 +13,21 @@ namespace Marx
 	{
 		m_window = std::unique_ptr<Window>(Window::create());
 		m_window->setEventCallback(BIND_EVENT_FUNC(Application::onEvent));
+
+		ControllerManager::init(BIND_EVENT_FUNC(Application::onEvent));
 	}
 
 	Application::~Application()
-	{}
+	{
+		ControllerManager::shutdown();
+	}
 
 	void Application::run()
 	{
 		while (m_running)
 		{
 			Window::onUpdate();
+			ControllerManager::onUpdate();
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 	}

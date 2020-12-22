@@ -2,18 +2,10 @@
 
 #include "Event.h"
 
+#include "Marx/Input/Mouse.h"
+
 namespace Marx
 {
-	enum MouseButton
-	{
-		MouseButton_None = 0,
-		MouseButton_Left,
-		MouseButton_Right,
-		MouseButton_Mid,
-		MouseButton_X1,
-		MouseButton_X2
-	};
-
 	class MARX_API MouseMoveEvent : public Event
 	{
 	public:

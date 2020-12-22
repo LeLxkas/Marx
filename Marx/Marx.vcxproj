@@ -115,6 +115,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>..\bin\Release-windows-x86_64\Marx\Marx.lib</ImportLibrary>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Release-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
@@ -148,6 +149,9 @@
   <ItemGroup>
     <ClInclude Include="src\Marx.h" />
     <ClInclude Include="src\Marx\Application.h" />
+    <ClInclude Include="src\Marx\Input\Controller.h" />
+    <ClInclude Include="src\Marx\Input\ControllerInputs.h" />
+    <ClInclude Include="src\Marx\Input\ControllerManager.h" />
     <ClInclude Include="src\Marx\Core.h" />
     <ClInclude Include="src\Marx\EntryPoint.h" />
     <ClInclude Include="src\Marx\Events\WindowEvents.h" />
@@ -157,12 +161,17 @@
     <ClInclude Include="src\Marx\Events\MouseEvents.h" />
     <ClInclude Include="src\Marx\Exceptions\ExceptionMacros.h" />
     <ClInclude Include="src\Marx\Exceptions\MarxException.h" />
+    <ClInclude Include="src\Marx\Input\Keyboard.h" />
+    <ClInclude Include="src\Marx\Input\Mouse.h" />
+    <ClInclude Include="src\Marx\Input\XController.h" />
     <ClInclude Include="src\Marx\Log.h" />
     <ClInclude Include="src\Marx\Window.h" />
     <ClInclude Include="src\mxpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp" />
+    <ClCompile Include="src\Marx\Input\ControllerManager.cpp" />
+    <ClCompile Include="src\Marx\Input\XController.cpp" />
     <ClCompile Include="src\Marx\Log.cpp" />
     <ClCompile Include="src\Marx\Window.cpp" />
     <ClCompile Include="src\mxpch.cpp">

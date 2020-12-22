@@ -1,29 +1,11 @@
 #pragma once
 
 #include "Event.h"
+#include "Marx/Input/ControllerInputs.h"
 
 namespace Marx
 {
 	typedef int ControllerID;
-
-	enum ControllerButton
-	{
-		ControllerButton_None = 0,
-		ControllerButton_A,
-		ControllerButton_B,
-		ControllerButton_X,
-		ControllerButton_Y,
-		ControllerButton_Start,
-		ControllerButton_Pause,
-		ControllerButton_DPAD_Up,
-		ControllerButton_DPAD_Down,
-		ControllerButton_DPAD_Left,
-		ControllerButton_DPAD_Right,
-		ControllerButton_Thumb_Left,
-		ControllerButton_Thumb_Right,
-		ControllerButton_Shoulder_Left,
-		ControllerButton_Shoulder_Right,
-	};
 
 	class MARX_API ControllerEvent : public Event
 	{
@@ -76,47 +58,49 @@ namespace Marx
 	class MARX_API ControllerTriggerMoveEvent : public ControllerEvent
 	{
 	public:
-		ControllerTriggerMoveEvent(ControllerID cid, float delta)
-			: ControllerEvent(cid), m_delta(delta)
+		ControllerTriggerMoveEvent(ControllerID cid, ControllerTrigger trigger, float delta)
+			: ControllerEvent(cid), m_trigger(trigger), m_delta(delta)
 		{}
 	public:
+		inline ControllerTrigger getTrigger() const { return m_trigger; }
 		inline float getDelta() const { return m_delta; }
 
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "ControllerTriggerMove[" << getID() << "]: " << getDelta();
+			ss << "ControllerTriggerMove[" << getID() << "]: " << getTrigger() << " (" << getDelta() << ")";
 			return ss.str();
 		}
 
 		EVENT_CLASS_FLAGS(EventFlagInput | EventFlagController | EventFlagControllerAnalog)
 			EVENT_CLASS_TYPE(ControllerTriggerMove)
 	private:
+		ControllerTrigger m_trigger;
 		float m_delta;
 	};
 
 	class MARX_API ControllerStickMoveEvent : public ControllerEvent
 	{
 	public:
-		ControllerStickMoveEvent(ControllerID cid, float deltaX, float deltaY)
-			: ControllerEvent(cid), m_deltaX(deltaX), m_deltaY(deltaY)
+		ControllerStickMoveEvent(ControllerID cid, ControllerStick stick, ControllerStickState sState)
+			: ControllerEvent(cid), m_stick(stick), m_sState(sState)
 		{}
 	public:
-		inline float getDeltaX() const { return m_deltaX; }
-		inline float getDeltaY() const { return m_deltaY; }
+		inline ControllerStick getStick() const { return m_stick; }
+		inline ControllerStickState getState() const { return m_sState; }
 
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "ControllerStickMove[" << getID() << "]: " << getDeltaX() << ", " << getDeltaY();
+			ss << "ControllerStickMove[" << getID() << "]: " << getStick() << " (" << getState().x << ", " << getState().y << ")";
 			return ss.str();
 		}
 
 		EVENT_CLASS_FLAGS(EventFlagInput | EventFlagController | EventFlagControllerAnalog)
 			EVENT_CLASS_TYPE(ControllerStickMove)
 	private:
-		float m_deltaX;
-		float m_deltaY;
+		ControllerStick m_stick;
+		ControllerStickState m_sState;
 	};
 
 	class MARX_API ControllerButtonEvent : public ControllerEvent
@@ -136,22 +120,18 @@ namespace Marx
 	class MARX_API ControllerButtonPressEvent : public ControllerButtonEvent
 	{
 	public:
-		ControllerButtonPressEvent(ControllerID cid, ControllerButton button, int repeatCount)
-			: ControllerButtonEvent(cid, button), m_repeatCount(repeatCount)
+		ControllerButtonPressEvent(ControllerID cid, ControllerButton button)
+			: ControllerButtonEvent(cid, button)
 		{}
 	public:
-		inline int getRepeatCount() const { return m_repeatCount; }
-
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "ControllerButtonPress[" << getID() << "]: " << getButton() << " (" << getRepeatCount() << " repeats)";
+			ss << "ControllerButtonPress[" << getID() << "]: " << getButton();
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(ControllerButtonPress)
-	private:
-		int m_repeatCount;
 	};
 
 	class MARX_API ControllerButtonReleaseEvent : public ControllerButtonEvent

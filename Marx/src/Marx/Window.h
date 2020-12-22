@@ -24,8 +24,6 @@ namespace Marx
 	class MARX_API Window
 	{
 	public:
-		using EventCallbackFunc = std::function<void(Event&)>;
-	public:
 		static Window* create(const WindowDesc& desc = WindowDesc());
 		~Window();
 	public:

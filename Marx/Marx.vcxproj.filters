@@ -50,6 +50,12 @@
     <ClInclude Include="src\Marx\Events\MouseEvents.h">
       <Filter>Marx\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Marx\Input\Controller.h" />
+    <ClInclude Include="src\Marx\Input\ControllerManager.h" />
+    <ClInclude Include="src\Marx\Input\Mouse.h" />
+    <ClInclude Include="src\Marx\Input\Keyboard.h" />
+    <ClInclude Include="src\Marx\Input\ControllerInputs.h" />
+    <ClInclude Include="src\Marx\Input\XController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
@@ -62,5 +68,7 @@
       <Filter>Marx</Filter>
     </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
+    <ClCompile Include="src\Marx\Input\ControllerManager.cpp" />
+    <ClCompile Include="src\Marx\Input\XController.cpp" />
   </ItemGroup>
 </Project>

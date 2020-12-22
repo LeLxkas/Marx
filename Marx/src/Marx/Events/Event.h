@@ -7,6 +7,8 @@ namespace Marx
 {
 	typedef int EventFlag;
 
+	using EventCallbackFunc = std::function<void(class Event&)>;
+
 	enum class EventType
 	{
 		None = 0,

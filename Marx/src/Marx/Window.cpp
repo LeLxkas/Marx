@@ -258,7 +258,7 @@ namespace Marx
 
 	void Window::Manager::registerWindow(HWND hWnd, Window* pWnd)
 	{
-		MX_ASSERT(
+		MX_CORE_ASSERT(
 			m_mapWindows.find(hWnd) == m_mapWindows.end(),
 			"Handle already registered!"
 		);
@@ -267,7 +267,7 @@ namespace Marx
 
 	void Window::Manager::unregisterWindow(HWND hWnd)
 	{
-		MX_ASSERT(
+		MX_CORE_ASSERT(
 			m_mapWindows.find(hWnd) != m_mapWindows.end(),
 			"Handle not registered!"
 		);

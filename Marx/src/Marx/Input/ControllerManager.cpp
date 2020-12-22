@@ -9,7 +9,7 @@ namespace Marx
 
 	void ControllerManager::init(const EventCallbackFunc& callback)
 	{
-		MX_ASSERT(!s_initialized, "ControllerManager already initialized!");
+		MX_CORE_ASSERT(!s_initialized, "ControllerManager already initialized!");
 
 		s_eventCallback = callback;
 
@@ -24,7 +24,7 @@ namespace Marx
 
 	void ControllerManager::shutdown()
 	{
-		MX_ASSERT(s_initialized, "ControllerManager is not initialized!");
+		MX_CORE_ASSERT(s_initialized, "ControllerManager is not initialized!");
 		for (int i = 0; i < XUSER_MAX_COUNT; ++i)
 		{
 			delete s_controller[i];

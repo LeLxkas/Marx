@@ -164,6 +164,8 @@
     <ClInclude Include="src\Marx\Input\Keyboard.h" />
     <ClInclude Include="src\Marx\Input\Mouse.h" />
     <ClInclude Include="src\Marx\Input\XController.h" />
+    <ClInclude Include="src\Marx\Layer.h" />
+    <ClInclude Include="src\Marx\LayerStack.h" />
     <ClInclude Include="src\Marx\Log.h" />
     <ClInclude Include="src\Marx\Window.h" />
     <ClInclude Include="src\mxpch.h" />
@@ -172,6 +174,8 @@
     <ClCompile Include="src\Marx\Application.cpp" />
     <ClCompile Include="src\Marx\Input\ControllerManager.cpp" />
     <ClCompile Include="src\Marx\Input\XController.cpp" />
+    <ClCompile Include="src\Marx\Layer.cpp" />
+    <ClCompile Include="src\Marx\LayerStack.cpp" />
     <ClCompile Include="src\Marx\Log.cpp" />
     <ClCompile Include="src\Marx\Window.cpp" />
     <ClCompile Include="src\mxpch.cpp">

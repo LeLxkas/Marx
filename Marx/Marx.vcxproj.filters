@@ -56,6 +56,8 @@
     <ClInclude Include="src\Marx\Input\Keyboard.h" />
     <ClInclude Include="src\Marx\Input\ControllerInputs.h" />
     <ClInclude Include="src\Marx\Input\XController.h" />
+    <ClInclude Include="src\Marx\Layer.h" />
+    <ClInclude Include="src\Marx\LayerStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
@@ -70,5 +72,7 @@
     <ClCompile Include="src\mxpch.cpp" />
     <ClCompile Include="src\Marx\Input\ControllerManager.cpp" />
     <ClCompile Include="src\Marx\Input\XController.cpp" />
+    <ClCompile Include="src\Marx\Layer.cpp" />
+    <ClCompile Include="src\Marx\LayerStack.cpp" />
   </ItemGroup>
 </Project>

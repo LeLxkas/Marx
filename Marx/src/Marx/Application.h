@@ -2,7 +2,8 @@
 
 #include "Core.h"
 #include "Window.h"
-#include "Events/Event.h"
+#include "Marx/LayerStack.h"
+#include "Marx/Events/Event.h"
 #include "Marx/Events/WindowEvents.h"
 
 namespace Marx
@@ -15,6 +16,9 @@ namespace Marx
 	public:
 		void run();
 		void onEvent(Event& e);
+	public:
+		void pushLayer(Layer* layer);
+		void pushOverlay(Layer* overlay);
 	private:
 		bool onWindowClose(WindowCloseEvent& e);
 	private:
@@ -22,6 +26,7 @@ namespace Marx
 		std::unique_ptr<Window> m_window;
 		REENABLE_DLL_INTERFACE_WARN;
 		bool m_running = true;
+		LayerStack m_layerStack;
 	};
 
 	// To be defined by client

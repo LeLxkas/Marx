@@ -26,18 +26,38 @@ namespace Marx
 	{
 		while (m_running)
 		{
+
+			for (Layer* layer : m_layerStack)
+				layer->onUpdate();
+
 			Window::onUpdate();
 			ControllerManager::onUpdate();
+
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 	}
 
 	void Application::onEvent(Event& e)
 	{
-		MX_CORE_TRACE("{0}", e);
-
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(Application::onWindowClose));
+
+		for (auto it = m_layerStack.end(); it != m_layerStack.begin(); )
+		{
+			(*--it)->onEvent(e);
+			if (e.handled)
+				break;
+		}
+	}
+
+	void Application::pushLayer(Layer* layer)
+	{
+		m_layerStack.pushLayer(layer);
+	}
+
+	void Application::pushOverlay(Layer* overlay)
+	{
+		m_layerStack.pushOverlay(overlay);
 	}
 
 	bool Application::onWindowClose(WindowCloseEvent& e)

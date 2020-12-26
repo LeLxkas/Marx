@@ -19,4 +19,6 @@
 // Windows specific headers
 #ifdef MX_PLATFORM_WINDOWS
   #include <Windows.h>
+  #include <wrl.h>
+  #include <d3d11.h>
 #endif

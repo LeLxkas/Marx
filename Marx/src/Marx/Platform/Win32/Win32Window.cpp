@@ -1,9 +1,8 @@
 #include "mxpch.h"
+#include "Win32Window.h"
 
-#include "Window.h"
-#include "Log.h"
-#include "Exceptions/MarxException.h"
-#include "Exceptions/ExceptionMacros.h"
+#include "Marx/Exceptions/MarxException.h"
+#include "Marx/Exceptions/ExceptionMacros.h"
 
 #include "Marx/Events/MouseEvents.h"
 #include "Marx/Events/WindowEvents.h"
@@ -12,47 +11,44 @@
 namespace Marx
 {
 
-	int Window::s_windowCount = 0;
-	WNDCLASS Window::Manager::m_wc;
-	const char* Window::Manager::m_name = "Marx WindowClass";
-	std::unordered_map<HWND, Window*> Window::Manager::m_mapWindows;
-
-	Window* Window::create(const WindowDesc& desc)
+	Win32Window::Win32Window(const WindowDesc& desc)
 	{
-		return new Window(desc);
+		init(desc);
 	}
 
-	Window::~Window()
+	Win32Window::~Win32Window()
 	{
 		shutdown();
 	}
 
-	void Window::shutdown()
+	void Win32Window::onUpdate()
 	{
-		if (m_isInitialized)
-		{
-			MX_CORE_INFO("Destroying window '{0}'", m_title);
-			MX_VERIFY_THROW_INFO(
-				DestroyWindow(m_hWnd),
-				"Could not destroy window!"
-			);
-			Manager::unregisterWindow(m_hWnd);
-			--s_windowCount;
-			m_isInitialized = false;
-		}
+		Win32Manager::handleMessages(m_hWnd);
 	}
 
-	void Window::onUpdate()
+	void Win32Window::init(const WindowDesc& desc)
 	{
-		Manager::handleMessages();
-	}
+		MX_CORE_ASSERT(!m_initialized, "Win32Window already initialized!");
 
-	void Window::init(const WindowDesc& desc)
-	{
+		RECT r;
+		r.top = 0;
+		r.left = 0;
+		r.bottom = desc.height;
+		r.right = desc.width;
+
+		DWORD windowStyle = WS_OVERLAPPEDWINDOW;
+		MX_CORE_ASSERT(
+			AdjustWindowRect(
+				&r,
+				windowStyle,
+				FALSE
+			),
+			"Unable to adjust window size!"
+		);
+
 		m_title = desc.title;
-		m_width = desc.width;
-		m_height = desc.height;
-		m_eventCallback = defaultWindowCallback;
+		m_width = r.right - r.left;
+		m_height = r.bottom - r.top;
 
 		MX_CORE_INFO("Creating window '{0}' ({1}, {2})", m_title, m_width, m_height);
 
@@ -60,7 +56,7 @@ namespace Marx
 		{
 			MX_CORE_WARN("WindowManager is not initizalized yet. Initializing it now");
 			MX_VERIFY_THROW_INFO(
-				Manager::init(),
+				Win32Manager::init(),
 				"Could not initialize WindowManager"
 			);
 			s_windowClassInitialized = true;
@@ -69,33 +65,41 @@ namespace Marx
 		MX_VERIFY_THROW_INFO(
 			m_hWnd = CreateWindowEx(
 				0,
-				Manager::getName(),
+				Win32Manager::getName(),
 				m_title.c_str(),
-				WS_OVERLAPPEDWINDOW,
+				windowStyle,
 				CW_USEDEFAULT, CW_USEDEFAULT, m_width, m_height,
 				NULL,
 				NULL,
-				Manager::getInstance(),
+				Win32Manager::getInstance(),
 				this
 			),
 			"Could not create window!"
 		);
 
 		ShowWindow(m_hWnd, SW_SHOW);
-		++s_windowCount;
-		m_isInitialized = true;
+		m_initialized = true;
 	}
 
-	Window::Window(const WindowDesc& desc)
+	void Win32Window::shutdown()
 	{
-		init(desc);
+		if (!m_initialized)
+			return;
+
+		MX_CORE_INFO("Destroying window '{0}'", m_title);
+		MX_VERIFY_THROW_INFO(
+			DestroyWindow(m_hWnd),
+			"Could not destroy window!"
+		);
+		Win32Manager::unregisterWindow(m_hWnd);
+		m_initialized = false;
 	}
 
-	LRESULT CALLBACK Window::wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+	LRESULT Win32Window::wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (uMsg)
 		{
-		// ---------- WINDOW MESSAGES ----------
+			// ---------- WINDOW MESSAGES ----------
 		case WM_CLOSE:
 		{
 			WindowCloseEvent event(this);
@@ -104,7 +108,7 @@ namespace Marx
 		}
 		case WM_DESTROY:
 		{
-			if (s_windowCount == 1)
+			if (getWndCount() == 1)
 			{
 				PostQuitMessage(0);
 			}
@@ -118,7 +122,21 @@ namespace Marx
 			m_width = width;
 			m_height = height;
 
+			m_internalResizeCallback(width, height);
+
 			WindowResizeEvent event(this, width, height);
+			m_eventCallback(event);
+			break;
+		}
+		case WM_SETFOCUS:
+		{
+			WindowFocusEvent event(this);
+			m_eventCallback(event);
+			break;
+		}
+		case WM_KILLFOCUS:
+		{
+			WindowFocusLossEvent event(this);
 			m_eventCallback(event);
 			break;
 		}
@@ -138,15 +156,9 @@ namespace Marx
 			m_eventCallback(event);
 			break;
 		}
-		case WM_SETFOCUS:
+		case WM_CHAR:
 		{
-			WindowFocusEvent event(this);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_KILLFOCUS:
-		{
-			WindowFocusLossEvent event(this);
+			KeyTypeEvent event(this, (int)wParam);
 			m_eventCallback(event);
 			break;
 		}
@@ -232,7 +244,7 @@ namespace Marx
 		return 0;
 	}
 
-	bool Window::Manager::init()
+	bool Win32Window::Win32Manager::init()
 	{
 		m_wc.lpfnWndProc = wndProcSetup;
 		m_wc.hInstance = getInstance();
@@ -241,22 +253,7 @@ namespace Marx
 		return RegisterClass(&m_wc);
 	}
 
-	bool Window::Manager::shutdown()
-	{
-		return UnregisterClass(getName(), getInstance());
-	}
-
-	HINSTANCE Window::Manager::getInstance()
-	{
-		return GetModuleHandle(NULL);
-	}
-
-	const char* Window::Manager::getName()
-	{
-		return m_name;
-	}
-
-	void Window::Manager::registerWindow(HWND hWnd, Window* pWnd)
+	void Win32Window::Win32Manager::registerWindow(HWND hWnd, Win32Window* pWnd)
 	{
 		MX_CORE_ASSERT(
 			m_mapWindows.find(hWnd) == m_mapWindows.end(),
@@ -265,7 +262,7 @@ namespace Marx
 		m_mapWindows.insert(std::make_pair(hWnd, pWnd));
 	}
 
-	void Window::Manager::unregisterWindow(HWND hWnd)
+	void Win32Window::Win32Manager::unregisterWindow(HWND hWnd)
 	{
 		MX_CORE_ASSERT(
 			m_mapWindows.find(hWnd) != m_mapWindows.end(),
@@ -274,7 +271,7 @@ namespace Marx
 		m_mapWindows.erase(hWnd);
 	}
 
-	void Window::Manager::setProcedure(Procedure proc, HWND hWnd)
+	void Win32Window::Win32Manager::setProcedure(Procedure proc, HWND hWnd)
 	{
 		if (!hWnd)
 		{
@@ -293,10 +290,20 @@ namespace Marx
 		}
 	}
 
-	std::optional<int> Window::Manager::handleMessages()
+	Win32Window* Win32Window::Win32Manager::getWnd(unsigned int index)
+	{
+		auto& it = m_mapWindows.begin();
+		while (index >= 1)
+		{
+			--index; ++it;
+		}
+		return it->second;
+	}
+
+	std::optional<int> Win32Window::Win32Manager::handleMessages(HWND hWnd)
 	{
 		MSG msg;
-		while (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE))
+		while (PeekMessage(&msg, hWnd, NULL, NULL, PM_REMOVE))
 		{
 			if (msg.message == WM_QUIT)
 			{
@@ -309,13 +316,13 @@ namespace Marx
 		return std::optional<int>();
 	}
 
-	LRESULT CALLBACK Window::Manager::wndProcSetup(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+	LRESULT CALLBACK Win32Window::Win32Manager::wndProcSetup(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		if (uMsg == WM_NCCREATE)
 		{
 			// Get pointer to Window class calling 'CreateWindowEx'
 			auto pCreateStruct = reinterpret_cast<CREATESTRUCT*>(lParam);
-			auto pWnd = reinterpret_cast<Window*>(pCreateStruct->lpCreateParams);
+			auto pWnd = reinterpret_cast<Win32Window*>(pCreateStruct->lpCreateParams);
 			// Register window
 			registerWindow(hWnd, pWnd);
 			// Set procedure to default
@@ -325,7 +332,7 @@ namespace Marx
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 
-	LRESULT CALLBACK Window::Manager::wndProcForward(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+	LRESULT CALLBACK Win32Window::Win32Manager::wndProcForward(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		auto it = m_mapWindows.find(hWnd);
 		return it->second->wndProc(hWnd, uMsg, wParam, lParam);

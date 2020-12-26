@@ -10,6 +10,21 @@
     <Filter Include="Marx\Exceptions">
       <UniqueIdentifier>{4E10706A-BA9B-DD2E-C3AC-60232FB7392F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Marx\ImGui">
+      <UniqueIdentifier>{6713A84D-53CB-E99A-BCD2-C2F6A8A9848B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Marx\Input">
+      <UniqueIdentifier>{3C4EA94D-2806-EB9A-910D-C4F67DE4858B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Marx\Platform">
+      <UniqueIdentifier>{718DB2BC-DD4D-2EF3-A688-7770120873CF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Marx\Platform\DX11">
+      <UniqueIdentifier>{5EE2626E-4AC6-23C4-B326-1E179F290E46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Marx\Platform\Win32">
+      <UniqueIdentifier>{1356213C-7FB7-FE49-0825-45FC74853509}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Marx.h" />
@@ -22,26 +37,10 @@
     <ClInclude Include="src\Marx\EntryPoint.h">
       <Filter>Marx</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marx\Events\Event.h">
-      <Filter>Marx\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Exceptions\ExceptionMacros.h">
-      <Filter>Marx\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Exceptions\MarxException.h">
-      <Filter>Marx\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Log.h">
-      <Filter>Marx</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Window.h">
-      <Filter>Marx</Filter>
-    </ClInclude>
-    <ClInclude Include="src\mxpch.h" />
-    <ClInclude Include="src\Marx\Events\WindowEvents.h">
-      <Filter>Marx\Events</Filter>
-    </ClInclude>
     <ClInclude Include="src\Marx\Events\ControllerEvents.h">
+      <Filter>Marx\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Events\Event.h">
       <Filter>Marx\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Marx\Events\KeyboardEvents.h">
@@ -50,29 +49,90 @@
     <ClInclude Include="src\Marx\Events\MouseEvents.h">
       <Filter>Marx\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marx\Input\Controller.h" />
-    <ClInclude Include="src\Marx\Input\ControllerManager.h" />
-    <ClInclude Include="src\Marx\Input\Mouse.h" />
-    <ClInclude Include="src\Marx\Input\Keyboard.h" />
-    <ClInclude Include="src\Marx\Input\ControllerInputs.h" />
-    <ClInclude Include="src\Marx\Input\XController.h" />
-    <ClInclude Include="src\Marx\Layer.h" />
-    <ClInclude Include="src\Marx\LayerStack.h" />
+    <ClInclude Include="src\Marx\Events\WindowEvents.h">
+      <Filter>Marx\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Exceptions\ExceptionMacros.h">
+      <Filter>Marx\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Exceptions\MarxException.h">
+      <Filter>Marx\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\ImGui\ImGuiLayer.h">
+      <Filter>Marx\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Input\Controller.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Input\ControllerInputs.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Input\ControllerManager.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Input\Keyboard.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Input\Mouse.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Input\XController.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Layer.h">
+      <Filter>Marx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\LayerStack.h">
+      <Filter>Marx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Log.h">
+      <Filter>Marx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\DX11\ImGuiDX11Helper.h">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\Win32\ImGuiWin32Helper.h">
+      <Filter>Marx\Platform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Window.h">
+      <Filter>Marx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mxpch.h" />
+    <ClInclude Include="src\Marx\Input.h" />
+    <ClInclude Include="src\Marx\Platform\Win32\Win32Window.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
+    <ClInclude Include="src\Marx\Exceptions\HrException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
       <Filter>Marx</Filter>
     </ClCompile>
+    <ClCompile Include="src\Marx\ImGui\ImGuiLayer.cpp">
+      <Filter>Marx\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Input\ControllerManager.cpp">
+      <Filter>Marx\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Input\XController.cpp">
+      <Filter>Marx\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Layer.cpp">
+      <Filter>Marx</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\LayerStack.cpp">
+      <Filter>Marx</Filter>
+    </ClCompile>
     <ClCompile Include="src\Marx\Log.cpp">
       <Filter>Marx</Filter>
     </ClCompile>
-    <ClCompile Include="src\Marx\Window.cpp">
-      <Filter>Marx</Filter>
+    <ClCompile Include="src\Marx\Platform\DX11\ImGuiDX11Helper.cpp">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Platform\Win32\ImGuiWin32Helper.cpp">
+      <Filter>Marx\Platform\Win32</Filter>
     </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
-    <ClCompile Include="src\Marx\Input\ControllerManager.cpp" />
-    <ClCompile Include="src\Marx\Input\XController.cpp" />
-    <ClCompile Include="src\Marx\Layer.cpp" />
-    <ClCompile Include="src\Marx\LayerStack.cpp" />
+    <ClCompile Include="src\Marx\Platform\Win32\Win32Window.cpp" />
+    <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
   </ItemGroup>
 </Project>

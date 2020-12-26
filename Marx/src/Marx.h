@@ -6,5 +6,7 @@
 #include "Marx/Layer.h"
 #include "Marx/Log.h"
 
+#include "Marx/ImGui/ImGuiLayer.h"
+
 // --- Entry Point ---
 #include "Marx/EntryPoint.h"

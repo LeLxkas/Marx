@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>mxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MX_PLATFORM_WINDOWS;MX_BUILD_DLL;MX_DEBUG;MX_ENABLE_ASSERTS;MX_USE_CONDITIONAL_EXCEPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -89,10 +89,11 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>XInput.lib;D3D11.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Marx\Marx.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Marx\Marx.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Marx\Marx.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Marx\Marx.dll "..\bin\Debug-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Marx\Marx.dll "..\bin\Debug-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -101,7 +102,7 @@
       <PrecompiledHeaderFile>mxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MX_PLATFORM_WINDOWS;MX_BUILD_DLL;MX_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -114,11 +115,11 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>XInput.lib;D3D11.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86_64\Marx\Marx.lib</ImportLibrary>
-      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Release-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -127,7 +128,7 @@
       <PrecompiledHeaderFile>mxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MX_PLATFORM_WINDOWS;MX_BUILD_DLL;MX_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -140,47 +141,64 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>XInput.lib;D3D11.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Dist-windows-x86_64\Marx\Marx.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Marx\Marx.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Marx\Marx.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Marx\Marx.dll "..\bin\Dist-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Marx\Marx.dll "..\bin\Dist-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Marx.h" />
     <ClInclude Include="src\Marx\Application.h" />
-    <ClInclude Include="src\Marx\Input\Controller.h" />
-    <ClInclude Include="src\Marx\Input\ControllerInputs.h" />
-    <ClInclude Include="src\Marx\Input\ControllerManager.h" />
     <ClInclude Include="src\Marx\Core.h" />
     <ClInclude Include="src\Marx\EntryPoint.h" />
-    <ClInclude Include="src\Marx\Events\WindowEvents.h" />
     <ClInclude Include="src\Marx\Events\ControllerEvents.h" />
     <ClInclude Include="src\Marx\Events\Event.h" />
     <ClInclude Include="src\Marx\Events\KeyboardEvents.h" />
     <ClInclude Include="src\Marx\Events\MouseEvents.h" />
+    <ClInclude Include="src\Marx\Events\WindowEvents.h" />
     <ClInclude Include="src\Marx\Exceptions\ExceptionMacros.h" />
+    <ClInclude Include="src\Marx\Exceptions\HrException.h" />
     <ClInclude Include="src\Marx\Exceptions\MarxException.h" />
+    <ClInclude Include="src\Marx\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Marx\Input.h" />
+    <ClInclude Include="src\Marx\Input\Controller.h" />
+    <ClInclude Include="src\Marx\Input\ControllerInputs.h" />
+    <ClInclude Include="src\Marx\Input\ControllerManager.h" />
     <ClInclude Include="src\Marx\Input\Keyboard.h" />
     <ClInclude Include="src\Marx\Input\Mouse.h" />
     <ClInclude Include="src\Marx\Input\XController.h" />
     <ClInclude Include="src\Marx\Layer.h" />
     <ClInclude Include="src\Marx\LayerStack.h" />
     <ClInclude Include="src\Marx\Log.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\ImGuiDX11Helper.h" />
+    <ClInclude Include="src\Marx\Platform\Win32\ImGuiWin32Helper.h" />
+    <ClInclude Include="src\Marx\Platform\Win32\Win32Window.h" />
     <ClInclude Include="src\Marx\Window.h" />
     <ClInclude Include="src\mxpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp" />
+    <ClCompile Include="src\Marx\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Marx\Input\ControllerManager.cpp" />
     <ClCompile Include="src\Marx\Input\XController.cpp" />
     <ClCompile Include="src\Marx\Layer.cpp" />
     <ClCompile Include="src\Marx\LayerStack.cpp" />
     <ClCompile Include="src\Marx\Log.cpp" />
-    <ClCompile Include="src\Marx\Window.cpp" />
+    <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
+    <ClCompile Include="src\Marx\Platform\DX11\ImGuiDX11Helper.cpp" />
+    <ClCompile Include="src\Marx\Platform\Win32\ImGuiWin32Helper.cpp" />
+    <ClCompile Include="src\Marx\Platform\Win32\Win32Window.cpp" />
     <ClCompile Include="src\mxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

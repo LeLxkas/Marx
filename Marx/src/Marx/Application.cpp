@@ -5,16 +5,21 @@
 #include "Marx/Log.h"
 #include "Marx/Input/ControllerManager.h"
 
+#include "Marx/Platform/Win32/Win32Window.h"
+
 namespace Marx
 {
-	#define BIND_EVENT_FUNC(x) std::bind(&x, this, std::placeholders::_1)
+	Application* Application::s_instance = nullptr;
 
 	Application::Application()
 	{
-		m_window = std::unique_ptr<Window>(Window::create());
-		m_window->setEventCallback(BIND_EVENT_FUNC(Application::onEvent));
+		MX_CORE_ASSERT(!s_instance, "Application already exists!");
+		s_instance = this;
 
-		ControllerManager::init(BIND_EVENT_FUNC(Application::onEvent));
+		m_window = std::unique_ptr<Window>(Window::create());
+		m_window->setEventCallback(MX_BIND_EVENT_METHOD(Application::onEvent));
+
+		ControllerManager::init(MX_BIND_EVENT_METHOD(Application::onEvent));
 	}
 
 	Application::~Application()
@@ -26,21 +31,21 @@ namespace Marx
 	{
 		while (m_running)
 		{
+			m_window->clear(0.0f, 0.0f, 0.0f);
 
 			for (Layer* layer : m_layerStack)
 				layer->onUpdate();
 
-			Window::onUpdate();
-			ControllerManager::onUpdate();
+			m_window->onUpdate();
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			ControllerManager::onUpdate();
 		}
 	}
 
 	void Application::onEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(Application::onWindowClose));
+		dispatcher.dispatch<WindowCloseEvent>(MX_BIND_EVENT_METHOD(Application::onWindowClose));
 
 		for (auto it = m_layerStack.end(); it != m_layerStack.begin(); )
 		{
@@ -53,17 +58,19 @@ namespace Marx
 	void Application::pushLayer(Layer* layer)
 	{
 		m_layerStack.pushLayer(layer);
+		layer->onAttach();
 	}
 
 	void Application::pushOverlay(Layer* overlay)
 	{
 		m_layerStack.pushOverlay(overlay);
+		overlay->onAttach();
 	}
 
 	bool Application::onWindowClose(WindowCloseEvent& e)
 	{
 		e.getWnd()->shutdown();
-		if (Window::getCount() == 0)
+		if (Win32Window::getWndCount() == 0)
 		{
 			m_running = false;
 		}

@@ -4,8 +4,6 @@
 
 #include "Controller.h"
 
-#pragma comment(lib, "XInput.lib")
-
 namespace Marx
 {
 	class MARX_API XController : public Controller

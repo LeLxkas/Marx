@@ -9,7 +9,7 @@ public:
 
 	void onUpdate() override
 	{
-		MX_INFO("ExampleLayer::onUpdate");
+		//MX_INFO("ExampleLayer::onUpdate");
 	}
 
 	void onEvent(Marx::Event& event) override
@@ -24,6 +24,7 @@ public:
 	Sandbox()
 	{
 		pushLayer(new ExampleLayer());
+		pushOverlay(new Marx::ImGuiLayer());
 	}
 	~Sandbox()
 	{}

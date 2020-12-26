@@ -11,11 +11,20 @@ workspace "Marx"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include dirs relative to solution folder
+IncludeDir = {}
+IncludeDir["ImGui"] = "Marx/vendor/imgui"
+
+group "Dependencies"
+	include "Marx/vendor/imgui"
+group ""
+
 project "Marx"
 	location "Marx"
 	kind "SharedLib"
 	language "C++"
 	characterset "MBCS"
+	staticruntime "Off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -30,12 +39,18 @@ project "Marx"
 
 	includedirs {
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.ImGui}"
+	}
+
+	links {
+		"ImGui",
+		"XInput.lib",
+		"D3D11.lib"
 	}
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "Off"
 		systemversion "latest"
 
 		defines {
@@ -44,7 +59,7 @@ project "Marx"
 		}
 
 		postbuildcommands {
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
@@ -53,14 +68,17 @@ project "Marx"
 			"MX_ENABLE_ASSERTS",
 			"MX_USE_CONDITIONAL_EXCEPT"
 		}
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "MX_RELEASE"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "MX_DIST"
+		runtime "Release"
 		optimize "On"
 
 project "Sandbox"
@@ -68,6 +86,7 @@ project "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
 	characterset "MBCS"
+	staticruntime "Off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -88,7 +107,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "Off"
 		systemversion "latest"
 
 		defines {
@@ -101,12 +119,15 @@ project "Sandbox"
 			"MX_ENABLE_ASSERTS",
 			"MX_USE_CONDITIONAL_EXCEPT"
 		}
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "MX_RELEASE"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "MX_DIST"
+		runtime "Release"
 		optimize "On"

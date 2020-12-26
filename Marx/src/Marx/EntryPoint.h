@@ -9,8 +9,8 @@ extern Marx::Application* Marx::createApplication();
 #define MX_EXCEPT_LOG(except) MX_CRITICAL(except.what())
 #define MX_STD_EXCEPT_LOG(except) MX_CRITICAL(except.what())
 
-#define MX_EXCEPT_BOX(except) MessageBox(NULL, except.what(), except.getName(), MB_ICONEXCLAMATION | MB_OK)
-#define MX_STD_EXCEPT_BOX(except) MessageBox(NULL, except.what(), "std::exception", MB_ICONEXCLAMATION | MB_OK)
+#define MX_EXCEPT_BOX(except) MessageBox(NULL, except.what(), except.getName(), MB_ICONEXCLAMATION | MB_OK | MB_DEFAULT_DESKTOP_ONLY)
+#define MX_STD_EXCEPT_BOX(except) MessageBox(NULL, except.what(), "std::exception", MB_ICONEXCLAMATION | MB_OK | MB_DEFAULT_DESKTOP_ONLY)
 
 int main(int argc, char** argv)
 {
@@ -25,8 +25,8 @@ int main(int argc, char** argv)
 		app->run();
 		delete app;
 	}
-	catch (const Marx::MarxException& except)     { MX_EXCEPT_LOG(except);     MX_EXCEPT_BOX(except); }
-	catch (const std::exception& except)          { MX_STD_EXCEPT_LOG(except); MX_STD_EXCEPT_BOX(except); }
+	catch (const Marx::MarxException& except)     { MX_EXCEPT_BOX(except); }
+	catch (const std::exception& except)          { MX_STD_EXCEPT_BOX(except); }
 }
 
 #undef MX_EXCEPT_BOX

@@ -19,6 +19,9 @@ namespace Marx
 	public:
 		void pushLayer(Layer* layer);
 		void pushOverlay(Layer* overlay);
+	public:
+		static inline Application& get() { return *s_instance; }
+		inline Window& getWindow() { return *m_window; }
 	private:
 		bool onWindowClose(WindowCloseEvent& e);
 	private:
@@ -27,6 +30,8 @@ namespace Marx
 		REENABLE_DLL_INTERFACE_WARN;
 		bool m_running = true;
 		LayerStack m_layerStack;
+	private:
+		static Application* s_instance;
 	};
 
 	// To be defined by client

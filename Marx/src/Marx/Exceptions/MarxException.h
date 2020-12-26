@@ -6,7 +6,9 @@
 
 namespace Marx
 {
-	std::string getErrString(DWORD errCode)
+	#define MX_EXCEPT_AUTOLOG() { if (autoLog) MX_CORE_CRITICAL(what()); }
+
+	inline std::string getErrString(DWORD errCode)
 	{
 		LPSTR pBuffer = 0;
 		size_t buffSize = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
@@ -20,9 +22,11 @@ namespace Marx
 	class MarxException
 	{
 	public:
-		MarxException(int line, const char* file, const char* msg = "No message")
+		MarxException(int line, const char* file, const char* msg = "No message", bool autoLog = true)
 			: m_line(line), m_file(file), m_msg(msg)
-		{}
+		{
+			MX_EXCEPT_AUTOLOG();
+		}
 	public:
 		int getLine() const noexcept { return m_line; }
 		const char* getFile() const noexcept { return m_file; }
@@ -50,9 +54,11 @@ namespace Marx
 	class MarxExceptionInfo : public MarxException
 	{
 	public:
-		MarxExceptionInfo(int line, const char* file, const char* msg, DWORD errCode)
-			: MarxException(line, file, msg), m_errCode(errCode)
-		{}
+		MarxExceptionInfo(int line, const char* file, const char* msg, DWORD errCode, bool autoLog = true)
+			: MarxException(line, file, msg, false), m_errCode(errCode)
+		{
+			MX_EXCEPT_AUTOLOG();
+		}
 	public:
 		virtual const char* getName() const noexcept override { return "MarxExceptionInfo"; }
 		virtual std::string getInfo() const noexcept override { return getErrString(m_errCode); }

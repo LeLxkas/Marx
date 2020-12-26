@@ -56,4 +56,21 @@ namespace Marx
 
 		EVENT_CLASS_TYPE(KeyRelease)
 	};
+
+	class MARX_API KeyTypeEvent : public KeyEvent
+	{
+	public:
+		KeyTypeEvent(Window* pWnd, int keyCode)
+			: KeyEvent(pWnd, keyCode)
+		{}
+	public:
+		std::string toString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyType: " << m_keyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyType)
+	};
 }

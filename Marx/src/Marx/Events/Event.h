@@ -13,7 +13,7 @@ namespace Marx
 	{
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowFocusLoss,
-		KeyPress, KeyRelease,
+		KeyPress, KeyRelease, KeyType,
 		MouseMove, MouseScroll, MouseHScroll, MouseButtonPress, MouseButtonRelease,
 		ControllerConnect, ControllerDisconnect,
 		ControllerTriggerMove, ControllerStickMove, ControllerButtonPress, ControllerButtonRelease

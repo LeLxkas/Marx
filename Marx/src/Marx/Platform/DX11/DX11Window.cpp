@@ -116,7 +116,7 @@ namespace Marx
 		MX_VERIFY_THROW_HR(
 			DX11Manager::getFactory()->CreateSwapChain(
 				DX11Manager::getDevice(),
-				nullptr,
+				&scDesc,
 				m_pSwapChain.GetAddressOf()
 			)
 		);

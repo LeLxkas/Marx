@@ -21,4 +21,7 @@
   #include <Windows.h>
   #include <wrl.h>
   #include <d3d11.h>
+using Microsoft::WRL::ComPtr;
+  #include <comdef.h>
+  #include <dxgidebug.h>
 #endif

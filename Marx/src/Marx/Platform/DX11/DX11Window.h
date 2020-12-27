@@ -4,8 +4,6 @@
 
 namespace Marx
 {
-	using Microsoft::WRL::ComPtr;
-
 	class MARX_API DX11Window : public Win32Window
 	{
 	public:

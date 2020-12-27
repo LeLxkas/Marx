@@ -20,7 +20,7 @@ namespace Marx
 	class MarxException
 	{
 	public:
-		MarxException(int line, const char* file, const char* msg = "No message", bool autoLog = true)
+		MarxException(int line, const char* file, std::string msg = "No message", bool autoLog = true)
 			: m_line(line), m_file(file), m_msg(msg)
 		{
 			MX_EXCEPT_AUTOLOG();
@@ -28,17 +28,17 @@ namespace Marx
 	public:
 		int getLine() const noexcept { return m_line; }
 		const char* getFile() const noexcept { return m_file; }
-		const char* getMsg() const noexcept { return m_msg; }
+		const char* getMsg() const noexcept { return m_msg.c_str(); }
 		virtual const char* getName() const noexcept { return "MarxException"; }
 		virtual std::string getInfo() const noexcept { return "No details"; }
 		const char* what() const noexcept
 		{
 			std::stringstream ss;
 			ss << getName() << "\n"
-				<< "  [ LINE ]  " << getLine() << "\n"
-				<< "  [ FILE ]  " << getFile() << "\n"
-				<< "  [ MSG  ]  " << getMsg() << "\n"
-				<< "  [ INFO ]  " << getInfo();
+				<< "    [ LINE ]  " << getLine() << "\n"
+				<< "    [ FILE ]  " << getFile() << "\n"
+				<< "    [ MSG  ]  " << getMsg() << "\n"
+				<< "    [ INFO ]  " << getInfo();
 			m_whatBuff = ss.str();
 			return m_whatBuff.c_str();
 		}
@@ -46,7 +46,7 @@ namespace Marx
 		mutable std::string m_whatBuff;
 		int m_line;
 		const char* m_file;
-		const char* m_msg;
+		std::string m_msg;
 	};
 
 	class MarxExceptionInfo : public MarxException

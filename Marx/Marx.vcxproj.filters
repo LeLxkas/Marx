@@ -99,6 +99,7 @@
     <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Marx\Input\KeyCodes.h" />
     <ClInclude Include="src\Marx\Input\MouseCodes.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11InfoManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
@@ -132,5 +133,6 @@
     <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
     <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Marx\Platform\DX11\DX11InfoManager.cpp" />
   </ItemGroup>
 </Project>

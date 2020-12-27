@@ -3,6 +3,7 @@
 
 #include "Marx/Exceptions/HrException.h"
 #include "Marx/Exceptions/ExceptionMacros.h"
+#include "Marx/Platform/DX11/DX11InfoManager.h"
 
 namespace Marx
 {
@@ -113,7 +114,7 @@ namespace Marx
 		scDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 		scDesc.Flags = 0;
 		
-		MX_VERIFY_THROW_HR(
+		MX_VERIFY_THROW_HR_INFO(
 			DX11Manager::getFactory()->CreateSwapChain(
 				DX11Manager::getDevice(),
 				&scDesc,
@@ -226,12 +227,17 @@ namespace Marx
 			D3D_FEATURE_LEVEL_9_1,
 		};
 
+		UINT flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+		#ifdef MX_DEBUG
+		flags |= D3D11_CREATE_DEVICE_DEBUG;
+		#endif
+
 		MX_VERIFY_THROW_HR(
 			D3D11CreateDevice(
 				NULL,
 				D3D_DRIVER_TYPE_HARDWARE,
 				NULL,
-				D3D11_CREATE_DEVICE_DEBUG | D3D11_CREATE_DEVICE_BGRA_SUPPORT,
+				flags,
 				fLvls,
 				ARRAYSIZE(fLvls),
 				D3D11_SDK_VERSION,

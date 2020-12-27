@@ -1,7 +1,5 @@
 #pragma once
 
-#include "mxpch.h"
-
 #include "Marx/Core.h"
 #include "Marx/Events/Event.h"
 
@@ -29,6 +27,7 @@ namespace Marx
 		virtual void onUpdate() = 0;
 		virtual unsigned int getWidth() const = 0;
 		virtual unsigned int getHeight() const = 0;
+		virtual void* getNativeWindow() const = 0;
 	public:
 		virtual void shutdown() = 0;
 	public:

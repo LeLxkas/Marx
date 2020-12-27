@@ -50,7 +50,7 @@ namespace Marx
 		io.KeyMap[ImGuiKey_Z] = 'Z';
 
 		ImGui_ImplDX11_Init(DX11Window::DX11Manager::getDevice(), DX11Window::DX11Manager::getContext());
-		ImGui_ImplWin32_Init(Win32Window::getWnd()->getHandle());
+		ImGui_ImplWin32_Init(Win32Window::getWnd()->getNativeWindow());
 	}
 
 	void ImGuiLayer::onDetach()

@@ -117,6 +117,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>XInput.lib;D3D11.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86_64\Marx\Marx.lib</ImportLibrary>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Release-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul)</Command>
@@ -166,8 +167,8 @@
     <ClInclude Include="src\Marx\Input\Controller.h" />
     <ClInclude Include="src\Marx\Input\ControllerInputs.h" />
     <ClInclude Include="src\Marx\Input\ControllerManager.h" />
-    <ClInclude Include="src\Marx\Input\Keyboard.h" />
-    <ClInclude Include="src\Marx\Input\Mouse.h" />
+    <ClInclude Include="src\Marx\Input\KeyCodes.h" />
+    <ClInclude Include="src\Marx\Input\MouseCodes.h" />
     <ClInclude Include="src\Marx\Input\XController.h" />
     <ClInclude Include="src\Marx\Layer.h" />
     <ClInclude Include="src\Marx\LayerStack.h" />
@@ -175,7 +176,8 @@
     <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
     <ClInclude Include="src\Marx\Platform\DX11\ImGuiDX11Helper.h" />
     <ClInclude Include="src\Marx\Platform\Win32\ImGuiWin32Helper.h" />
-    <ClInclude Include="src\Marx\Platform\Win32\Win32Window.h" />
+    <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Marx\Window.h" />
     <ClInclude Include="src\mxpch.h" />
   </ItemGroup>
@@ -190,7 +192,8 @@
     <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
     <ClCompile Include="src\Marx\Platform\DX11\ImGuiDX11Helper.cpp" />
     <ClCompile Include="src\Marx\Platform\Win32\ImGuiWin32Helper.cpp" />
-    <ClCompile Include="src\Marx\Platform\Win32\Win32Window.cpp" />
+    <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\mxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

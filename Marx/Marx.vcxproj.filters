@@ -70,12 +70,6 @@
     <ClInclude Include="src\Marx\Input\ControllerManager.h">
       <Filter>Marx\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marx\Input\Keyboard.h">
-      <Filter>Marx\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Input\Mouse.h">
-      <Filter>Marx\Input</Filter>
-    </ClInclude>
     <ClInclude Include="src\Marx\Input\XController.h">
       <Filter>Marx\Input</Filter>
     </ClInclude>
@@ -99,9 +93,12 @@
     </ClInclude>
     <ClInclude Include="src\mxpch.h" />
     <ClInclude Include="src\Marx\Input.h" />
-    <ClInclude Include="src\Marx\Platform\Win32\Win32Window.h" />
     <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
     <ClInclude Include="src\Marx\Exceptions\HrException.h" />
+    <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Marx\Input\KeyCodes.h" />
+    <ClInclude Include="src\Marx\Input\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
@@ -132,7 +129,8 @@
       <Filter>Marx\Platform\Win32</Filter>
     </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
-    <ClCompile Include="src\Marx\Platform\Win32\Win32Window.cpp" />
     <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
+    <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

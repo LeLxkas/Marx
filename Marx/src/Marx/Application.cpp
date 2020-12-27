@@ -5,7 +5,8 @@
 #include "Marx/Log.h"
 #include "Marx/Input/ControllerManager.h"
 
-#include "Marx/Platform/Win32/Win32Window.h"
+#include "Marx/Input.h"
+#include "Marx/Platform/Windows/WindowsWindow.h"
 
 namespace Marx
 {

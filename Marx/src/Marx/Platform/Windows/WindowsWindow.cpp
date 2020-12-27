@@ -1,5 +1,5 @@
 #include "mxpch.h"
-#include "Win32Window.h"
+#include "WindowsWindow.h"
 
 #include "Marx/Exceptions/MarxException.h"
 #include "Marx/Exceptions/ExceptionMacros.h"
@@ -7,6 +7,7 @@
 #include "Marx/Events/MouseEvents.h"
 #include "Marx/Events/WindowEvents.h"
 #include "Marx/Events/KeyboardEvents.h"
+#include "Marx/Input/MouseCodes.h"
 
 namespace Marx
 {
@@ -165,52 +166,52 @@ namespace Marx
 		// ---------- MOUSE MESSAGES ----------
 		case WM_LBUTTONDOWN:
 		{
-			MouseButtonPressEvent event(this, MouseButton_Left);
+			MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_LEFT);
 			m_eventCallback(event);
 			break;
 		}
 		case WM_MBUTTONDOWN:
 		{
-			MouseButtonPressEvent event(this, MouseButton_Mid);
+			MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_MID);
 			m_eventCallback(event);
 			break;
 		}
 		case WM_RBUTTONDOWN:
 		{
-			MouseButtonPressEvent event(this, MouseButton_Right);
+			MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_RIGHT);
 			m_eventCallback(event);
 			break;
 		}
 		case WM_XBUTTONDOWN:
 		{
 			int x = HIWORD(wParam);
-			MouseButton btn = (x == XBUTTON1) ? MouseButton_X1 : MouseButton_X2;
+			int btn = (x == XBUTTON1) ? MX_MOUSE_BUTTON_X1 : MX_MOUSE_BUTTON_X2;
 			MouseButtonPressEvent event(this, btn);
 			m_eventCallback(event);
 			break;
 		}
 		case WM_LBUTTONUP:
 		{
-			MouseButtonReleaseEvent event(this, MouseButton_Left);
+			MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_LEFT);
 			m_eventCallback(event);
 			break;
 		}
 		case WM_MBUTTONUP:
 		{
-			MouseButtonReleaseEvent event(this, MouseButton_Mid);
+			MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_MID);
 			m_eventCallback(event);
 			break;
 		}
 		case WM_RBUTTONUP:
 		{
-			MouseButtonReleaseEvent event(this, MouseButton_Right);
+			MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_RIGHT);
 			m_eventCallback(event);
 			break;
 		}
 		case WM_XBUTTONUP:
 		{
 			int x = HIWORD(wParam);
-			MouseButton btn = (x == XBUTTON1) ? MouseButton_X1 : MouseButton_X2;
+			int btn = (x == XBUTTON1) ? MX_MOUSE_BUTTON_X1 : MX_MOUSE_BUTTON_X2;
 			MouseButtonReleaseEvent event(this, btn);
 			m_eventCallback(event);
 			break;

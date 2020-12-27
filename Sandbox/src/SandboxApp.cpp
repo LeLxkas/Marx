@@ -9,7 +9,8 @@ public:
 
 	void onUpdate() override
 	{
-		//MX_INFO("ExampleLayer::onUpdate");
+		if (Marx::Input::isKeyPressed(MX_KEY_TAB))
+			MX_INFO("Specific key is pressed!");
 	}
 
 	void onEvent(Marx::Event& event) override

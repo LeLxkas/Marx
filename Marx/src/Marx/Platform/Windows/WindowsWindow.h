@@ -17,7 +17,7 @@ namespace Marx
 		inline unsigned int getHeight() const override { return m_height; }
 		static unsigned int getWndCount() { return (unsigned int)Win32Manager::getWndCount(); }
 		static Win32Window* getWnd(unsigned int index = 0) { return Win32Manager::getWnd(index); }
-		inline HWND getHandle() const { return m_hWnd; }
+		virtual void* getNativeWindow() const override { return m_hWnd; }
 	public:
 		inline void setEventCallback(const EventCallbackFunc& callback) override { m_eventCallback = callback; }
 	protected:

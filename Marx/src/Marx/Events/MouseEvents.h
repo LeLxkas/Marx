@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include "Marx/Input/Mouse.h"
-
 namespace Marx
 {
 	class MARX_API MouseMoveEvent : public Event
@@ -77,21 +75,21 @@ namespace Marx
 	class MARX_API MouseButtonEvent : public Event
 	{
 	public:
-		inline MouseButton getButton() const { return m_button; }
+		inline int getButton() const { return m_button; }
 
 		EVENT_CLASS_FLAGS(EventFlagInput | EventFlagMouse | EventFlagMouseButton)
 	protected:
-		MouseButtonEvent(Window* pWnd, MouseButton button)
+		MouseButtonEvent(Window* pWnd, int button)
 			: Event(pWnd), m_button(button)
 		{}
 	protected:
-		MouseButton m_button;
+		int m_button;
 	};
 
 	class MARX_API MouseButtonPressEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressEvent(Window* pWnd, MouseButton button)
+		MouseButtonPressEvent(Window* pWnd, int button)
 			: MouseButtonEvent(pWnd, button)
 		{}
 	public:
@@ -108,7 +106,7 @@ namespace Marx
 	class MARX_API MouseButtonReleaseEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleaseEvent(Window* pWnd, MouseButton button)
+		MouseButtonReleaseEvent(Window* pWnd, int button)
 			: MouseButtonEvent(pWnd, button)
 		{}
 	public:

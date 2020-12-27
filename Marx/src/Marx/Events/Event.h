@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mxpch.h"
+
 #include "Marx/Core.h"
 
 namespace Marx

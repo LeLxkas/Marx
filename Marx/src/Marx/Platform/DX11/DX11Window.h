@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Marx/Platform/Win32/Win32Window.h"
+#include "Marx/Platform/Windows/WindowsWindow.h"
 
 namespace Marx
 {

@@ -9,9 +9,12 @@
 #include "Marx/Events/KeyboardEvents.h"
 #include "Marx/Input/MouseCodes.h"
 
+#include "backends/imgui_impl_win32.h"
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 namespace Marx
 {
-
 	Win32Window::Win32Window(const WindowDesc& desc)
 	{
 		init(desc);
@@ -24,7 +27,8 @@ namespace Marx
 
 	void Win32Window::onUpdate()
 	{
-		Win32Manager::handleMessages(m_hWnd);
+		//Win32Manager::handleMessages(m_hWnd);
+		Win32Manager::handleMessages(NULL);
 	}
 
 	void Win32Window::init(const WindowDesc& desc)
@@ -117,16 +121,19 @@ namespace Marx
 		}
 		case WM_SIZE:
 		{
-			UINT width = LOWORD(lParam);
-			UINT height = HIWORD(lParam);
+			if (wParam != SIZE_MINIMIZED)
+			{
+				UINT width = LOWORD(lParam);
+				UINT height = HIWORD(lParam);
 
-			m_width = width;
-			m_height = height;
+				m_width = width;
+				m_height = height;
 
-			m_internalResizeCallback(width, height);
+				m_internalResizeCallback(width, height);
 
-			WindowResizeEvent event(this, width, height);
-			m_eventCallback(event);
+				WindowResizeEvent event(this, width, height);
+				m_eventCallback(event);
+			}
 			break;
 		}
 		case WM_SETFOCUS:
@@ -237,7 +244,9 @@ namespace Marx
 			POINTS p = MAKEPOINTS(lParam);
 			MouseMoveEvent event(this, (float)p.x, (float)p.y);
 			m_eventCallback(event);
-		}
+			break;
+		} 
+		// ---------- MISC ----------
 		// ---------- DEFAULT BEHAVIOR ----------
 		default:
 			return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -335,7 +344,12 @@ namespace Marx
 
 	LRESULT CALLBACK Win32Window::Win32Manager::wndProcForward(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
+		if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+			return true;
+
 		auto it = m_mapWindows.find(hWnd);
-		return it->second->wndProc(hWnd, uMsg, wParam, lParam);
+		if (it != m_mapWindows.end())
+			return it->second->wndProc(hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 }

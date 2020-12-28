@@ -49,9 +49,15 @@ namespace Marx
 
 	void DX11Window::onUpdate()
 	{
+		DX11Manager::getContext()->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
+
 		Win32Window::onUpdate();
 
-		present(1);
+		if (m_initialized)
+		{
+			present(1);
+			DX11Manager::getContext()->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
+		}
 	}
 
 	void DX11Window::shutdown()
@@ -91,7 +97,13 @@ namespace Marx
 
 	void DX11Window::present(bool vSyncEnabled)
 	{
-		m_pSwapChain->Present(vSyncEnabled, 0);
+		HRESULT hr;
+
+		MX_VERIFY_THROW_HR(
+			m_pSwapChain->Present(
+				vSyncEnabled, 0
+			)
+		);
 	}
 
 	void DX11Window::createSwapChain()
@@ -112,7 +124,7 @@ namespace Marx
 		scDesc.BufferCount = 2;
 		scDesc.OutputWindow = m_hWnd;
 		scDesc.Windowed = TRUE;
-		scDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+		scDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 		scDesc.Flags = 0;
 		
 		MX_VERIFY_THROW_HR_INFO(

@@ -9,8 +9,6 @@ public:
 
 	void onUpdate() override
 	{
-		if (Marx::Input::isKeyPressed(MX_KEY_TAB))
-			MX_INFO("Specific key is pressed!");
 	}
 
 	void onEvent(Marx::Event& event) override
@@ -25,7 +23,6 @@ public:
 	Sandbox()
 	{
 		pushLayer(new ExampleLayer());
-		pushOverlay(new Marx::ImGuiLayer());
 	}
 	~Sandbox()
 	{}

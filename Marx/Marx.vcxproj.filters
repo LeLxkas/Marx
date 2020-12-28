@@ -106,12 +106,6 @@
     <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h">
       <Filter>Marx\Platform\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marx\Platform\DX11\ImGuiDX11Helper.h">
-      <Filter>Marx\Platform\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Platform\Win32\ImGuiWin32Helper.h">
-      <Filter>Marx\Platform\Win32</Filter>
-    </ClInclude>
     <ClInclude Include="src\Marx\Platform\Windows\HrException.h">
       <Filter>Marx\Platform\Windows</Filter>
     </ClInclude>
@@ -154,12 +148,6 @@
     <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp">
       <Filter>Marx\Platform\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="src\Marx\Platform\DX11\ImGuiDX11Helper.cpp">
-      <Filter>Marx\Platform\DX11</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Marx\Platform\Win32\ImGuiWin32Helper.cpp">
-      <Filter>Marx\Platform\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp">
       <Filter>Marx\Platform\Windows</Filter>
     </ClCompile>
@@ -167,5 +155,6 @@
       <Filter>Marx\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
+    <ClCompile Include="src\Marx\ImGui\ImGuiBuild.cpp" />
   </ItemGroup>
 </Project>

@@ -17,8 +17,11 @@ namespace Marx
 		MX_CORE_ASSERT(!s_instance, "Application already exists!");
 		s_instance = this;
 
-		m_window = std::unique_ptr<Window>(Window::create());
-		m_window->setEventCallback(MX_BIND_EVENT_METHOD(Application::onEvent));
+		m_pWindow = std::unique_ptr<Window>(Window::create());
+		m_pWindow->setEventCallback(MX_BIND_EVENT_METHOD(Application::onEvent));
+
+		m_pImGuiLayer = new ImGuiLayer;
+		pushOverlay(m_pImGuiLayer);
 
 		ControllerManager::init(MX_BIND_EVENT_METHOD(Application::onEvent));
 	}
@@ -32,12 +35,17 @@ namespace Marx
 	{
 		while (m_running)
 		{
-			m_window->clear(0.0f, 0.0f, 0.0f);
+			m_pWindow->clear(0.0f, 0.0f, 0.0f);
 
 			for (Layer* layer : m_layerStack)
 				layer->onUpdate();
 
-			m_window->onUpdate();
+			m_pImGuiLayer->begin();
+			for (Layer* layer : m_layerStack)
+				layer->onImGuiRender();
+			m_pImGuiLayer->end();
+
+			m_pWindow->onUpdate();
 
 			ControllerManager::onUpdate();
 		}

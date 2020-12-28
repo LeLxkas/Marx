@@ -175,8 +175,6 @@
     <ClInclude Include="src\Marx\Platform\DX11\DX11InfoException.h" />
     <ClInclude Include="src\Marx\Platform\DX11\DX11InfoManager.h" />
     <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
-    <ClInclude Include="src\Marx\Platform\DX11\ImGuiDX11Helper.h" />
-    <ClInclude Include="src\Marx\Platform\Win32\ImGuiWin32Helper.h" />
     <ClInclude Include="src\Marx\Platform\Windows\HrException.h" />
     <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
@@ -185,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp" />
+    <ClCompile Include="src\Marx\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Marx\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Marx\Input\ControllerManager.cpp" />
     <ClCompile Include="src\Marx\Input\XController.cpp" />
@@ -193,8 +192,6 @@
     <ClCompile Include="src\Marx\Log.cpp" />
     <ClCompile Include="src\Marx\Platform\DX11\DX11InfoManager.cpp" />
     <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
-    <ClCompile Include="src\Marx\Platform\DX11\ImGuiDX11Helper.cpp" />
-    <ClCompile Include="src\Marx\Platform\Win32\ImGuiWin32Helper.cpp" />
     <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\mxpch.cpp">

@@ -21,7 +21,7 @@ namespace Marx
 	private:
 		DISABLE_DLL_INTERFACE_WARN;
 		std::vector<Layer*> m_layers;
-		std::vector<Layer*>::iterator m_layerInsert;
 		REENABLE_DLL_INTERFACE_WARN;
+		unsigned int m_layerInsertIndex = 0;
 	};
 }

@@ -4,9 +4,7 @@
 namespace Marx
 {
 	LayerStack::LayerStack()
-	{
-		m_layerInsert = m_layers.begin();
-	}
+	{}
 
 	LayerStack::~LayerStack()
 	{
@@ -16,7 +14,7 @@ namespace Marx
 
 	void LayerStack::pushLayer(Layer* layer)
 	{
-		m_layerInsert = m_layers.emplace(m_layerInsert, layer);
+		m_layers.emplace(m_layers.begin() + m_layerInsertIndex++, layer);
 	}
 
 	void LayerStack::pushOverlay(Layer* overlay)
@@ -31,7 +29,7 @@ namespace Marx
 		MX_CORE_ASSERT(it != m_layers.end(), "Could not find layer in layerstack!");
 
 		m_layers.erase(it);
-		--m_layerInsert;
+		--m_layerInsertIndex;
 	}
 
 	void LayerStack::popOverlay(Layer* overlay)

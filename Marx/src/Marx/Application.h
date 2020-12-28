@@ -6,6 +6,8 @@
 #include "Marx/Events/Event.h"
 #include "Marx/Events/WindowEvents.h"
 
+#include "Marx/ImGui/ImGuiLayer.h"
+
 namespace Marx
 {
 	class MARX_API Application
@@ -21,12 +23,13 @@ namespace Marx
 		void pushOverlay(Layer* overlay);
 	public:
 		static inline Application& get() { return *s_instance; }
-		inline Window& getWindow() { return *m_window; }
+		inline Window& getWindow() { return *m_pWindow; }
 	private:
 		bool onWindowClose(WindowCloseEvent& e);
 	private:
+		ImGuiLayer* m_pImGuiLayer;
 		DISABLE_DLL_INTERFACE_WARN;
-		std::unique_ptr<Window> m_window;
+		std::unique_ptr<Window> m_pWindow;
 		REENABLE_DLL_INTERFACE_WARN;
 		bool m_running = true;
 		LayerStack m_layerStack;

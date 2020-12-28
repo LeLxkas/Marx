@@ -102,7 +102,8 @@ project "Sandbox"
 
 	includedirs {
 		"Marx/vendor/spdlog/include",
-		"Marx/src"
+		"Marx/src",
+		"Marx/vendor"
 	}
 
 	links {

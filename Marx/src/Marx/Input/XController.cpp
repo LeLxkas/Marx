@@ -25,7 +25,7 @@ namespace Marx
 			}
 			return false; // Device disconnected, can be removed from pool
 		}
-
+		
 		if (!m_isConnected)
 		{
 			m_isConnected = true;

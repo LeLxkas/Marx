@@ -2,6 +2,7 @@
 #include "ImGuiLayer.h"
 
 #include "Marx/Application.h"
+#include "Marx/Input/KeyCodes.h"
 #include "Marx/Platform/DX11/DX11Window.h"
 #include "Marx/Platform/DX11/ImGuiDX11Helper.h"
 #include "Marx/Platform/Win32/ImGuiWin32Helper.h"
@@ -26,22 +27,22 @@ namespace Marx
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-		io.KeyMap[ImGuiKey_Tab] = VK_TAB;
-		io.KeyMap[ImGuiKey_LeftArrow] = VK_LEFT;
-		io.KeyMap[ImGuiKey_RightArrow] = VK_RIGHT;
-		io.KeyMap[ImGuiKey_UpArrow] = VK_UP;
-		io.KeyMap[ImGuiKey_DownArrow] = VK_DOWN;
-		io.KeyMap[ImGuiKey_PageUp] = VK_PRIOR;
-		io.KeyMap[ImGuiKey_PageDown] = VK_NEXT;
-		io.KeyMap[ImGuiKey_Home] = VK_HOME;
-		io.KeyMap[ImGuiKey_End] = VK_END;
-		io.KeyMap[ImGuiKey_Insert] = VK_INSERT;
-		io.KeyMap[ImGuiKey_Delete] = VK_DELETE;
-		io.KeyMap[ImGuiKey_Backspace] = VK_BACK;
-		io.KeyMap[ImGuiKey_Space] = VK_SPACE;
-		io.KeyMap[ImGuiKey_Enter] = VK_RETURN;
-		io.KeyMap[ImGuiKey_Escape] = VK_ESCAPE;
-		io.KeyMap[ImGuiKey_KeyPadEnter] = VK_RETURN;
+		io.KeyMap[ImGuiKey_Tab] =  MX_KEY_TAB;
+		io.KeyMap[ImGuiKey_LeftArrow] =  MX_KEY_LEFT;
+		io.KeyMap[ImGuiKey_RightArrow] =  MX_KEY_RIGHT;
+		io.KeyMap[ImGuiKey_UpArrow] =  MX_KEY_UP;
+		io.KeyMap[ImGuiKey_DownArrow] =  MX_KEY_DOWN;
+		io.KeyMap[ImGuiKey_PageUp] =  MX_KEY_PRIOR;
+		io.KeyMap[ImGuiKey_PageDown] =  MX_KEY_NEXT;
+		io.KeyMap[ImGuiKey_Home] =  MX_KEY_HOME;
+		io.KeyMap[ImGuiKey_End] =  MX_KEY_END;
+		io.KeyMap[ImGuiKey_Insert] =  MX_KEY_INSERT;
+		io.KeyMap[ImGuiKey_Delete] =  MX_KEY_DELETE;
+		io.KeyMap[ImGuiKey_Backspace] =  MX_KEY_BACK;
+		io.KeyMap[ImGuiKey_Space] =  MX_KEY_SPACE;
+		io.KeyMap[ImGuiKey_Enter] =  MX_KEY_RETURN;
+		io.KeyMap[ImGuiKey_Escape] = MX_KEY_ESCAPE;
+		io.KeyMap[ImGuiKey_KeyPadEnter] =  MX_KEY_RETURN;
 		io.KeyMap[ImGuiKey_A] = 'A';
 		io.KeyMap[ImGuiKey_C] = 'C';
 		io.KeyMap[ImGuiKey_V] = 'V';
@@ -104,14 +105,14 @@ namespace Marx
 	bool ImGuiLayer::onMouseButtonPressEvent(MouseButtonPressEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.getButton()] = true;
+		io.MouseDown[e.getButton() - 1] = true;
 		return false;
 	}
 
 	bool ImGuiLayer::onMouseButtonReleaseEvent(MouseButtonReleaseEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.getButton()] = false;
+		io.MouseDown[e.getButton() - 1] = false;
 		return false;
 	}
 

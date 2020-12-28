@@ -44,9 +44,7 @@ project "Marx"
 	}
 
 	links {
-		"ImGui",
-		"XInput.lib",
-		"D3D11.lib"
+		"ImGui"
 	}
 
 	filter "system:windows"
@@ -56,6 +54,12 @@ project "Marx"
 		defines {
 			"MX_PLATFORM_WINDOWS",
 			"MX_BUILD_DLL"
+		}
+
+		links {
+			"XInput.lib",
+			"D3D11.lib",
+			"dxguid.lib"
 		}
 
 		postbuildcommands {

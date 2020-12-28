@@ -25,6 +25,9 @@
     <Filter Include="Marx\Platform\Win32">
       <UniqueIdentifier>{1356213C-7FB7-FE49-0825-45FC74853509}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Marx\Platform\Windows">
+      <UniqueIdentifier>{AB18EBC9-1785-A6C4-E078-3E224CA4C82C}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Marx.h" />
@@ -61,6 +64,9 @@
     <ClInclude Include="src\Marx\ImGui\ImGuiLayer.h">
       <Filter>Marx\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Marx\Input.h">
+      <Filter>Marx</Filter>
+    </ClInclude>
     <ClInclude Include="src\Marx\Input\Controller.h">
       <Filter>Marx\Input</Filter>
     </ClInclude>
@@ -68,6 +74,12 @@
       <Filter>Marx\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Marx\Input\ControllerManager.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Input\KeyCodes.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Input\MouseCodes.h">
       <Filter>Marx\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Marx\Input\XController.h">
@@ -82,24 +94,37 @@
     <ClInclude Include="src\Marx\Log.h">
       <Filter>Marx</Filter>
     </ClInclude>
+    <ClInclude Include="src\Marx\Platform\DX11\DX11ExceptionMacros.h">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\DX11\DX11InfoException.h">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\DX11\DX11InfoManager.h">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClInclude>
     <ClInclude Include="src\Marx\Platform\DX11\ImGuiDX11Helper.h">
       <Filter>Marx\Platform\DX11</Filter>
     </ClInclude>
     <ClInclude Include="src\Marx\Platform\Win32\ImGuiWin32Helper.h">
       <Filter>Marx\Platform\Win32</Filter>
     </ClInclude>
+    <ClInclude Include="src\Marx\Platform\Windows\HrException.h">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Marx\Window.h">
       <Filter>Marx</Filter>
     </ClInclude>
     <ClInclude Include="src\mxpch.h" />
-    <ClInclude Include="src\Marx\Input.h" />
-    <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
-    <ClInclude Include="src\Marx\Exceptions\HrException.h" />
-    <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h" />
-    <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
-    <ClInclude Include="src\Marx\Input\KeyCodes.h" />
-    <ClInclude Include="src\Marx\Input\MouseCodes.h" />
-    <ClInclude Include="src\Marx\Platform\DX11\DX11InfoManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
@@ -123,16 +148,24 @@
     <ClCompile Include="src\Marx\Log.cpp">
       <Filter>Marx</Filter>
     </ClCompile>
+    <ClCompile Include="src\Marx\Platform\DX11\DX11InfoManager.cpp">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClCompile>
     <ClCompile Include="src\Marx\Platform\DX11\ImGuiDX11Helper.cpp">
       <Filter>Marx\Platform\DX11</Filter>
     </ClCompile>
     <ClCompile Include="src\Marx\Platform\Win32\ImGuiWin32Helper.cpp">
       <Filter>Marx\Platform\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
-    <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
-    <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp" />
-    <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
-    <ClCompile Include="src\Marx\Platform\DX11\DX11InfoManager.cpp" />
   </ItemGroup>
 </Project>

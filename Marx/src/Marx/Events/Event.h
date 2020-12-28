@@ -1,8 +1,10 @@
 #pragma once
 
-#include "mxpch.h"
-
 #include "Marx/Core.h"
+
+#include <string>
+#include <functional>
+#include <sstream>
 
 namespace Marx
 {

@@ -89,7 +89,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>XInput.lib;D3D11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>XInput.lib;D3D11.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Marx\Marx.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -115,9 +115,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>XInput.lib;D3D11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>XInput.lib;D3D11.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86_64\Marx\Marx.lib</ImportLibrary>
-      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Release-windows-x86_64\Marx\Marx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Marx\Marx.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul)</Command>
@@ -142,7 +141,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>XInput.lib;D3D11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>XInput.lib;D3D11.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Dist-windows-x86_64\Marx\Marx.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -160,7 +159,6 @@
     <ClInclude Include="src\Marx\Events\MouseEvents.h" />
     <ClInclude Include="src\Marx\Events\WindowEvents.h" />
     <ClInclude Include="src\Marx\Exceptions\ExceptionMacros.h" />
-    <ClInclude Include="src\Marx\Exceptions\HrException.h" />
     <ClInclude Include="src\Marx\Exceptions\MarxException.h" />
     <ClInclude Include="src\Marx\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Marx\Input.h" />
@@ -173,12 +171,15 @@
     <ClInclude Include="src\Marx\Layer.h" />
     <ClInclude Include="src\Marx\LayerStack.h" />
     <ClInclude Include="src\Marx\Log.h" />
-    <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11ExceptionMacros.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11InfoException.h" />
     <ClInclude Include="src\Marx\Platform\DX11\DX11InfoManager.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
     <ClInclude Include="src\Marx\Platform\DX11\ImGuiDX11Helper.h" />
     <ClInclude Include="src\Marx\Platform\Win32\ImGuiWin32Helper.h" />
-    <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Marx\Platform\Windows\HrException.h" />
     <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Marx\Window.h" />
     <ClInclude Include="src\mxpch.h" />
   </ItemGroup>
@@ -194,8 +195,8 @@
     <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
     <ClCompile Include="src\Marx\Platform\DX11\ImGuiDX11Helper.cpp" />
     <ClCompile Include="src\Marx\Platform\Win32\ImGuiWin32Helper.cpp" />
-    <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\mxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

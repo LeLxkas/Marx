@@ -1,8 +1,9 @@
 #include "mxpch.h"
 #include "DX11Window.h"
 
-#include "Marx/Exceptions/HrException.h"
 #include "Marx/Exceptions/ExceptionMacros.h"
+#include "Marx/Platform/DX11/DX11InfoException.h"
+#include "Marx/Platform/DX11/DX11ExceptionMacros.h"
 #include "Marx/Platform/DX11/DX11InfoManager.h"
 
 namespace Marx

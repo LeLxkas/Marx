@@ -1,7 +1,5 @@
 #pragma once
 
-#include "mxpch.h"
-
 namespace Marx
 {
 	class DX11InfoManager
@@ -18,7 +16,7 @@ namespace Marx
 		std::string getMessage(UINT64 index);
 	private:
 		UINT64 m_setIndex;
-		ComPtr<IDXGIInfoQueue> m_pInfoQueue;
+		class ComPtr<IDXGIInfoQueue> m_pInfoQueue;
 	private:
 		static DX11InfoManager* s_pInfoMan;
 	};

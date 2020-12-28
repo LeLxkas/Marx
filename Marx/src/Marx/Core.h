@@ -1,10 +1,14 @@
 #pragma once
 
 #ifdef MX_PLATFORM_WINDOWS
-  #ifdef MX_BUILD_DLL
-    #define MARX_API __declspec(dllexport)
+  #if MX_DYNAMIC_LINK
+    #ifdef MX_BUILD_DLL
+      #define MARX_API __declspec(dllexport)
+    #else
+      #define MARX_API __declspec(dllimport)
+    #endif
   #else
-    #define MARX_API __declspec(dllimport)
+    #define MARX_API
   #endif
 #else
   #error Marx only supports Windows!

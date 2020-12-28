@@ -31,7 +31,7 @@ namespace Marx
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		io.ConfigFlags != ImGuiConfigFlags_NavEnableKeyboard;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
@@ -75,7 +75,7 @@ namespace Marx
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::get();
-		io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
+		io.DisplaySize = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());
 
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

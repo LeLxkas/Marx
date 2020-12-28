@@ -15,11 +15,13 @@ namespace Marx
 	void LayerStack::pushLayer(Layer* layer)
 	{
 		m_layers.emplace(m_layers.begin() + m_layerInsertIndex++, layer);
+		layer->onAttach();
 	}
 
 	void LayerStack::pushOverlay(Layer* overlay)
 	{
 		m_layers.emplace_back(overlay);
+		overlay->onAttach();
 	}
 
 	void LayerStack::popLayer(Layer* layer)
@@ -30,6 +32,7 @@ namespace Marx
 
 		m_layers.erase(it);
 		--m_layerInsertIndex;
+		layer->onDetach();
 	}
 
 	void LayerStack::popOverlay(Layer* overlay)
@@ -39,5 +42,6 @@ namespace Marx
 		MX_CORE_ASSERT(it != m_layers.end(), "Could not find overlay in layerstack!");
 
 		m_layers.erase(it);
+		overlay->onDetach();
 	}
 }

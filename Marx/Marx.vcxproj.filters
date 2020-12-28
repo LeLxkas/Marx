@@ -22,9 +22,6 @@
     <Filter Include="Marx\Platform\DX11">
       <UniqueIdentifier>{5EE2626E-4AC6-23C4-B326-1E179F290E46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Marx\Platform\Win32">
-      <UniqueIdentifier>{1356213C-7FB7-FE49-0825-45FC74853509}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Marx\Platform\Windows">
       <UniqueIdentifier>{AB18EBC9-1785-A6C4-E078-3E224CA4C82C}</UniqueIdentifier>
     </Filter>
@@ -124,6 +121,9 @@
     <ClCompile Include="src\Marx\Application.cpp">
       <Filter>Marx</Filter>
     </ClCompile>
+    <ClCompile Include="src\Marx\ImGui\ImGuiBuild.cpp">
+      <Filter>Marx\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\Marx\ImGui\ImGuiLayer.cpp">
       <Filter>Marx\ImGui</Filter>
     </ClCompile>
@@ -155,6 +155,5 @@
       <Filter>Marx\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
-    <ClCompile Include="src\Marx\ImGui\ImGuiBuild.cpp" />
   </ItemGroup>
 </Project>

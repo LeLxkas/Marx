@@ -1,5 +1,7 @@
 #include <Marx.h>
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public Marx::Layer
 {
 public:
@@ -9,6 +11,9 @@ public:
 
 	void onUpdate() override
 	{
+	}
+
+	virtual void onImGuiRender() override {
 	}
 
 	void onEvent(Marx::Event& event) override

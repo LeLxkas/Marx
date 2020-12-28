@@ -21,10 +21,11 @@ group ""
 
 project "Marx"
 	location "Marx"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 	characterset "MBCS"
-	staticruntime "Off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -48,7 +49,6 @@ project "Marx"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines {
@@ -57,13 +57,9 @@ project "Marx"
 		}
 
 		links {
-			"XInput.lib",
+			--"XInput.lib",
 			"D3D11.lib",
 			"dxguid.lib"
-		}
-
-		postbuildcommands {
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
@@ -73,24 +69,25 @@ project "Marx"
 			"MX_USE_CONDITIONAL_EXCEPT"
 		}
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "MX_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "MX_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 	characterset "MBCS"
-	staticruntime "Off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -125,14 +122,14 @@ project "Sandbox"
 			"MX_USE_CONDITIONAL_EXCEPT"
 		}
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "MX_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "MX_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"

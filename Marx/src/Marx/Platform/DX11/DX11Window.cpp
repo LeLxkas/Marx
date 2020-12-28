@@ -97,7 +97,7 @@ namespace Marx
 
 	void DX11Window::present(bool vSyncEnabled)
 	{
-		HRESULT hr;
+		MX_DEBUG_HR_DECL;
 
 		MX_VERIFY_THROW_HR(
 			m_pSwapChain->Present(

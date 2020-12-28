@@ -67,13 +67,11 @@ namespace Marx
 	void Application::pushLayer(Layer* layer)
 	{
 		m_layerStack.pushLayer(layer);
-		layer->onAttach();
 	}
 
 	void Application::pushOverlay(Layer* overlay)
 	{
 		m_layerStack.pushOverlay(overlay);
-		overlay->onAttach();
 	}
 
 	bool Application::onWindowClose(WindowCloseEvent& e)

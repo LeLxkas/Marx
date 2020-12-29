@@ -3,7 +3,8 @@
 
 #include "Marx/Application.h"
 #include "Marx/Input/KeyCodes.h"
-#include "Marx/Platform/DX11/DX11Window.h"
+#include "Marx/Platform/Windows/WindowsWindow.h"
+#include "Marx/Platform/DX11/DX11GraphicsContext.h"
 
 #include "backends/imgui_impl_dx11.h"
 #include "backends/imgui_impl_win32.h"
@@ -25,9 +26,6 @@ namespace Marx
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
 
-		ImGui_ImplDX11_Init(DX11Window::DX11Manager::getDevice(), DX11Window::DX11Manager::getContext());
-		ImGui_ImplWin32_Init(Win32Window::getWnd()->getNativeWindow());
-
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -47,8 +45,8 @@ namespace Marx
 		}
 
 		// Setup Platform/Renderer backends
+		ImGui_ImplDX11_Init(&DX11GraphicsContext::DX11Manager::getDevice(), &DX11GraphicsContext::DX11Manager::getContext());
 		ImGui_ImplWin32_Init(Win32Window::getWnd()->getNativeWindow());
-		ImGui_ImplDX11_Init(DX11Window::DX11Manager::getDevice(), DX11Window::DX11Manager::getContext());
 	}
 
 	void ImGuiLayer::onDetach()

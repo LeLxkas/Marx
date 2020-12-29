@@ -163,12 +163,13 @@
     <ClInclude Include="src\Marx\LayerStack.h" />
     <ClInclude Include="src\Marx\Log.h" />
     <ClInclude Include="src\Marx\Platform\DX11\DX11ExceptionMacros.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11GraphicsContext.h" />
     <ClInclude Include="src\Marx\Platform\DX11\DX11InfoException.h" />
     <ClInclude Include="src\Marx\Platform\DX11\DX11InfoManager.h" />
-    <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h" />
     <ClInclude Include="src\Marx\Platform\Windows\HrException.h" />
     <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Marx\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Marx\Window.h" />
     <ClInclude Include="src\mxpch.h" />
   </ItemGroup>
@@ -181,8 +182,8 @@
     <ClCompile Include="src\Marx\Layer.cpp" />
     <ClCompile Include="src\Marx\LayerStack.cpp" />
     <ClCompile Include="src\Marx\Log.cpp" />
+    <ClCompile Include="src\Marx\Platform\DX11\DX11GraphicsContext.cpp" />
     <ClCompile Include="src\Marx\Platform\DX11\DX11InfoManager.cpp" />
-    <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp" />
     <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\mxpch.cpp">

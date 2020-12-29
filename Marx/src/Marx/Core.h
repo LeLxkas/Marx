@@ -14,9 +14,14 @@
   #error Marx only supports Windows!
 #endif
 
-#define DISABLE_DLL_INTERFACE_WARN  __pragma(warning(push)) \
+#if MX_DYNAMIC_LINK
+  #define DISABLE_DLL_INTERFACE_WARN  __pragma(warning(push)) \
                                       __pragma(warning(disable:4251))
-#define REENABLE_DLL_INTERFACE_WARN __pragma(warning(pop))
+  #define REENABLE_DLL_INTERFACE_WARN __pragma(warning(pop))
+#else
+  #define DISABLE_DLL_INTERFACE_WARN
+  #define REENABLE_DLL_INTERFACE_WARN
+#endif
 
 // Debug asserts
 #ifdef MX_ENABLE_ASSERTS

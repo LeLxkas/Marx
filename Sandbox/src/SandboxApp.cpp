@@ -10,16 +10,13 @@ public:
 	{}
 
 	void onUpdate() override
-	{
-	}
+	{}
 
 	virtual void onImGuiRender() override {
 	}
 
 	void onEvent(Marx::Event& event) override
-	{
-		MX_TRACE("{0}", event);
-	}
+	{}
 };
 
 class Sandbox : public Marx::Application

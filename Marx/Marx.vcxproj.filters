@@ -100,9 +100,6 @@
     <ClInclude Include="src\Marx\Platform\DX11\DX11InfoManager.h">
       <Filter>Marx\Platform\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marx\Platform\DX11\DX11Window.h">
-      <Filter>Marx\Platform\DX11</Filter>
-    </ClInclude>
     <ClInclude Include="src\Marx\Platform\Windows\HrException.h">
       <Filter>Marx\Platform\Windows</Filter>
     </ClInclude>
@@ -116,6 +113,8 @@
       <Filter>Marx</Filter>
     </ClInclude>
     <ClInclude Include="src\mxpch.h" />
+    <ClInclude Include="src\Marx\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11GraphicsContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
@@ -145,9 +144,6 @@
     <ClCompile Include="src\Marx\Platform\DX11\DX11InfoManager.cpp">
       <Filter>Marx\Platform\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="src\Marx\Platform\DX11\DX11Window.cpp">
-      <Filter>Marx\Platform\DX11</Filter>
-    </ClCompile>
     <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp">
       <Filter>Marx\Platform\Windows</Filter>
     </ClCompile>
@@ -155,5 +151,6 @@
       <Filter>Marx\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
+    <ClCompile Include="src\Marx\Platform\DX11\DX11GraphicsContext.cpp" />
   </ItemGroup>
 </Project>

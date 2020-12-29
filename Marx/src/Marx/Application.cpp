@@ -35,7 +35,7 @@ namespace Marx
 	{
 		while (m_running)
 		{
-			m_pWindow->clear(0.0f, 0.0f, 0.0f);
+			m_pWindow->clear(0.1f, 0.1f, 0.1f);
 
 			for (Layer* layer : m_layerStack)
 				layer->onUpdate();

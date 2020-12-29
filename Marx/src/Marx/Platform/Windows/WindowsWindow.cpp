@@ -11,10 +11,17 @@
 
 #include "backends/imgui_impl_win32.h"
 
+#include "Marx/Platform/DX11/DX11GraphicsContext.h"
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace Marx
 {
+	Window* Window::create(const WindowDesc& desc)
+	{
+		return new Win32Window(desc);
+	}
+
 	Win32Window::Win32Window(const WindowDesc& desc)
 	{
 		init(desc);
@@ -25,8 +32,15 @@ namespace Marx
 		shutdown();
 	}
 
+	void Win32Window::clear(float r, float g, float b)
+	{
+		m_pContext->clear(r, g, b);
+	}
+
 	void Win32Window::onUpdate()
 	{
+		m_pContext->swapBuffers();
+
 		//Win32Manager::handleMessages(m_hWnd);
 		Win32Manager::handleMessages(NULL);
 	}
@@ -55,17 +69,10 @@ namespace Marx
 		m_width = r.right - r.left;
 		m_height = r.bottom - r.top;
 
+
 		MX_CORE_INFO("Creating window '{0}' ({1}, {2})", m_title, m_width, m_height);
 
-		if (!s_windowClassInitialized)
-		{
-			MX_CORE_WARN("WindowManager is not initizalized yet. Initializing it now");
-			MX_VERIFY_THROW_INFO(
-				Win32Manager::init(),
-				"Could not initialize WindowManager"
-			);
-			s_windowClassInitialized = true;
-		}
+		Win32Manager::init();
 
 		MX_VERIFY_THROW_INFO(
 			m_hWnd = CreateWindowEx(
@@ -82,6 +89,9 @@ namespace Marx
 			"Could not create window!"
 		);
 
+		m_pContext = new DX11GraphicsContext(m_hWnd);
+		m_pContext->init();
+
 		ShowWindow(m_hWnd, SW_SHOW);
 		m_initialized = true;
 	}
@@ -91,12 +101,16 @@ namespace Marx
 		if (!m_initialized)
 			return;
 
+		m_pContext->shutdown();
+		delete m_pContext;
+
 		MX_CORE_INFO("Destroying window '{0}'", m_title);
 		MX_VERIFY_THROW_INFO(
 			DestroyWindow(m_hWnd),
 			"Could not destroy window!"
 		);
 		Win32Manager::unregisterWindow(m_hWnd);
+		Win32Manager::shutdown();
 		m_initialized = false;
 	}
 
@@ -129,7 +143,7 @@ namespace Marx
 				m_width = width;
 				m_height = height;
 
-				m_internalResizeCallback(width, height);
+				m_pContext->onResize(width, height);
 
 				WindowResizeEvent event(this, width, height);
 				m_eventCallback(event);
@@ -254,13 +268,25 @@ namespace Marx
 		return 0;
 	}
 
-	bool Win32Window::Win32Manager::init()
+	void Win32Window::Win32Manager::init()
 	{
+		MX_CORE_WARN("Win32Manager is not initizalized yet. Initializing it now");
+
 		m_wc.lpfnWndProc = wndProcSetup;
 		m_wc.hInstance = getInstance();
 		m_wc.lpszClassName = m_name;
 
-		return RegisterClass(&m_wc);
+		RegisterClass(&m_wc);
+	}
+
+	void Win32Window::Win32Manager::shutdown()
+	{
+		if (m_mapWindows.size() > 0)
+			return;
+
+		MX_CORE_INFO("Shutting down Win32Manager");
+
+		UnregisterClass(getName(), getInstance());
 	}
 
 	void Win32Window::Win32Manager::registerWindow(HWND hWnd, Win32Window* pWnd)

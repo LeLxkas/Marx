@@ -2,16 +2,17 @@
 
 #include "Marx/Window.h"
 
+#include "Marx/Renderer/GraphicsContext.h"
+
 namespace Marx
 {
-	using InternalResizeCallbackFunc = std::function<void(unsigned int, unsigned int)>;
-
 	class MARX_API Win32Window : public Window
 	{
 	public:
 		Win32Window(const WindowDesc& desc);
 		virtual ~Win32Window();
 	public:
+		virtual void clear(float r, float g, float b) override;
 		virtual void onUpdate() override;
 		inline unsigned int getWidth() const override { return m_width; }
 		inline unsigned int getHeight() const override { return m_height; }
@@ -23,7 +24,6 @@ namespace Marx
 	protected:
 		void init(const WindowDesc& desc);
 		virtual void shutdown() override;
-		inline void setInternalResizeCallback(const InternalResizeCallbackFunc& callback) { m_internalResizeCallback = callback; }
 	protected:
 		LRESULT CALLBACK wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	protected:
@@ -34,8 +34,8 @@ namespace Marx
 		DISABLE_DLL_INTERFACE_WARN;
 		std::string m_title;
 		EventCallbackFunc m_eventCallback = [](Event&) {};
-		InternalResizeCallbackFunc m_internalResizeCallback = [](unsigned int, unsigned int) {};
 		REENABLE_DLL_INTERFACE_WARN;
+		GraphicsContext* m_pContext;
 	private:
 		class Win32Manager
 		{
@@ -46,8 +46,8 @@ namespace Marx
 				Default
 			};
 		public:
-			static bool init();
-			static bool shutdown() { return UnregisterClass(getName(), getInstance()); }
+			static void init();
+			static void shutdown();
 			static HINSTANCE getInstance() { return GetModuleHandle(NULL); }
 			static const char* getName() { return m_name; }
 			static void registerWindow(HWND hWnd, Win32Window* pWnd);

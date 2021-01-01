@@ -79,9 +79,6 @@
     <ClInclude Include="src\Marx\Input\MouseCodes.h">
       <Filter>Marx\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marx\Input\XController.h">
-      <Filter>Marx\Input</Filter>
-    </ClInclude>
     <ClInclude Include="src\Marx\Layer.h">
       <Filter>Marx</Filter>
     </ClInclude>
@@ -90,15 +87,6 @@
     </ClInclude>
     <ClInclude Include="src\Marx\Log.h">
       <Filter>Marx</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Platform\DX11\DX11ExceptionMacros.h">
-      <Filter>Marx\Platform\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Platform\DX11\DX11InfoException.h">
-      <Filter>Marx\Platform\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Platform\DX11\DX11InfoManager.h">
-      <Filter>Marx\Platform\DX11</Filter>
     </ClInclude>
     <ClInclude Include="src\Marx\Platform\Windows\HrException.h">
       <Filter>Marx\Platform\Windows</Filter>
@@ -114,7 +102,24 @@
     </ClInclude>
     <ClInclude Include="src\mxpch.h" />
     <ClInclude Include="src\Marx\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Marx\Platform\DX11\DX11GraphicsContext.h" />
+    <ClInclude Include="src\Marx\Renderer\Buffer.h" />
+    <ClInclude Include="src\Marx\Renderer\Renderer.h" />
+    <ClInclude Include="src\Marx\Renderer\Shader.h" />
+    <ClInclude Include="src\Marx\Platform\XInput\XController.h">
+      <Filter>Marx\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11Buffer.h" />
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11ExceptionMacros.h">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11GraphicsContext.h" />
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11InfoException.h">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11InfoManager.h">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
@@ -129,9 +134,6 @@
     <ClCompile Include="src\Marx\Input\ControllerManager.cpp">
       <Filter>Marx\Input</Filter>
     </ClCompile>
-    <ClCompile Include="src\Marx\Input\XController.cpp">
-      <Filter>Marx\Input</Filter>
-    </ClCompile>
     <ClCompile Include="src\Marx\Layer.cpp">
       <Filter>Marx</Filter>
     </ClCompile>
@@ -141,9 +143,6 @@
     <ClCompile Include="src\Marx\Log.cpp">
       <Filter>Marx</Filter>
     </ClCompile>
-    <ClCompile Include="src\Marx\Platform\DX11\DX11InfoManager.cpp">
-      <Filter>Marx\Platform\DX11</Filter>
-    </ClCompile>
     <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp">
       <Filter>Marx\Platform\Windows</Filter>
     </ClCompile>
@@ -151,6 +150,17 @@
       <Filter>Marx\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
-    <ClCompile Include="src\Marx\Platform\DX11\DX11GraphicsContext.cpp" />
+    <ClCompile Include="src\Marx\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Marx\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Marx\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Marx\Platform\XInput\XController.cpp">
+      <Filter>Marx\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Platform\D3D11\D3D11Buffer.cpp" />
+    <ClCompile Include="src\Marx\Platform\D3D11\D3D11GraphicsContext.cpp" />
+    <ClCompile Include="src\Marx\Platform\D3D11\D3D11InfoManager.cpp">
+      <Filter>Marx\Platform\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Platform\D3D11\D3D11Shader.cpp" />
   </ItemGroup>
 </Project>

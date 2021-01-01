@@ -8,6 +8,8 @@
 
 #include "Marx/ImGui/ImGuiLayer.h"
 
+#include "mxpch.h"
+
 namespace Marx
 {
 	class MARX_API Application
@@ -33,6 +35,12 @@ namespace Marx
 		REENABLE_DLL_INTERFACE_WARN;
 		bool m_running = true;
 		LayerStack m_layerStack;
+		// Temporary
+		std::unique_ptr<class IndexBuffer> m_pIndexBuffer;
+		std::unique_ptr<class Shader> m_pShader;
+		std::unique_ptr<class VertexBuffer> m_pVertexBuffer;
+		std::unique_ptr<class IndexBuffer> m_pSqIndexBuffer;
+		std::unique_ptr<class VertexBuffer> m_pSqVertexBuffer;
 	private:
 		static Application* s_instance;
 	};

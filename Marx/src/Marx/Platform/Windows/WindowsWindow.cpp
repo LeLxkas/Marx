@@ -11,7 +11,7 @@
 
 #include "backends/imgui_impl_win32.h"
 
-#include "Marx/Platform/DX11/DX11GraphicsContext.h"
+#include "Marx/Platform/D3D11/D3D11GraphicsContext.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -89,7 +89,7 @@ namespace Marx
 			"Could not create window!"
 		);
 
-		m_pContext = new DX11GraphicsContext(m_hWnd);
+		m_pContext = new D3D11GraphicsContext(m_hWnd);
 		m_pContext->init();
 
 		ShowWindow(m_hWnd, SW_SHOW);

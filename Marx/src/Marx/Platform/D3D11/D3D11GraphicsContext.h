@@ -4,11 +4,11 @@
 
 namespace Marx
 {
-	class DX11GraphicsContext : public GraphicsContext
+	class D3D11GraphicsContext : public GraphicsContext
 	{
 	public:
-		DX11GraphicsContext(HWND wndHandle);
-		~DX11GraphicsContext();
+		D3D11GraphicsContext(HWND wndHandle);
+		~D3D11GraphicsContext();
 	public:
 		virtual void init() override;
 		virtual void shutdown() override;
@@ -22,9 +22,9 @@ namespace Marx
 		void createDepthStencil();
 		void createDepthStencilView();
 		void setViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
-		inline void setViewport() { DX11Manager::getContext().RSSetViewports(1, &m_viewport); }
-		inline void unsetRenderTarget() { ID3D11RenderTargetView* nullViews[] = { nullptr }; DX11Manager::getContext().OMSetRenderTargets(1, nullViews, NULL); }
-		inline void setRenderTarget() { DX11Manager::getContext().OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get()); }
+		inline void setViewport() { D3D11Manager::getContext().RSSetViewports(1, &m_viewport); }
+		inline void unsetRenderTarget() { ID3D11RenderTargetView* nullViews[] = { nullptr }; D3D11Manager::getContext().OMSetRenderTargets(1, nullViews, NULL); }
+		inline void setRenderTarget() { D3D11Manager::getContext().OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get()); }
 	private:
 		DISABLE_DLL_INTERFACE_WARN;
 		ComPtr<IDXGISwapChain> m_pSwapChain;
@@ -39,7 +39,7 @@ namespace Marx
 		unsigned int m_height;
 		bool m_initialized = false;
 	public:
-		class DX11Manager
+		class D3D11Manager
 		{
 		public:
 			static void init();
@@ -47,6 +47,7 @@ namespace Marx
 		public:
 			inline static ID3D11Device& getDevice() { return *s_pDevice.Get(); }
 			inline static ID3D11DeviceContext& getContext() { return *s_pContext.Get(); }
+			static IDXGIAdapter& getAdapter();
 			static IDXGIFactory& getFactory();
 		public:
 			inline static void flushContext() { s_pContext->Flush(); }

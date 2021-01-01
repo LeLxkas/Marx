@@ -2,7 +2,7 @@
 
 #include <Xinput.h>
 
-#include "Controller.h"
+#include "Marx/Input/Controller.h"
 
 namespace Marx
 {

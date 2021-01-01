@@ -1,14 +1,14 @@
 #include "mxpch.h"
-#include "DX11GraphicsContext.h"
+#include "D3D11GraphicsContext.h"
 
 #include "Marx/Exceptions/ExceptionMacros.h"
-#include "Marx/Platform/DX11/DX11InfoException.h"
-#include "Marx/Platform/DX11/DX11ExceptionMacros.h"
-#include "Marx/Platform/DX11/DX11InfoManager.h"
+#include "Marx/Platform/D3D11/D3D11InfoException.h"
+#include "Marx/Platform/D3D11/D3D11ExceptionMacros.h"
+#include "Marx/Platform/D3D11/D3D11InfoManager.h"
 
 namespace Marx
 {
-	DX11GraphicsContext::DX11GraphicsContext(HWND wndHandle)
+	D3D11GraphicsContext::D3D11GraphicsContext(HWND wndHandle)
 		: m_wndHandle(wndHandle)
 	{
 		RECT rect;
@@ -17,13 +17,23 @@ namespace Marx
 		m_height = rect.bottom - rect.top;
 	}
 
-	DX11GraphicsContext::~DX11GraphicsContext()
+	D3D11GraphicsContext::~D3D11GraphicsContext()
 	{}
 
-	void DX11GraphicsContext::init()
+	void D3D11GraphicsContext::init()
 	{
-		MX_CORE_ASSERT(!m_initialized, "DX11GraphicsContext is already initialized!");
-		DX11Manager::init();
+		MX_CORE_ASSERT(!m_initialized, "D3D11GraphicsContext is already initialized!");
+		D3D11Manager::init();
+
+		{
+			auto& adapter = D3D11Manager::getAdapter();
+			DXGI_ADAPTER_DESC adapterDesc;
+			adapter.GetDesc(&adapterDesc);
+			_bstr_t conv(adapterDesc.Description);
+			const char* description = conv;
+			MX_CORE_TRACE("D3D11 Renderer: {0}", description);
+			MX_CORE_TRACE("      Revision: {0}", adapterDesc.Revision);
+		}
 
 		createSwapChain();
 		createRenderTargetView();
@@ -35,33 +45,33 @@ namespace Marx
 		m_initialized = true;
 	}
 
-	void DX11GraphicsContext::shutdown()
+	void D3D11GraphicsContext::shutdown()
 	{
-		MX_CORE_ASSERT(m_initialized, "DX11GraphicsContext is not initialized!");
-		DX11Manager::shutdown();
+		MX_CORE_ASSERT(m_initialized, "D3D11GraphicsContext is not initialized!");
+		D3D11Manager::shutdown();
 		m_initialized = false;
 	}
 
-	void DX11GraphicsContext::clear(float r, float g, float b)
+	void D3D11GraphicsContext::clear(float r, float g, float b)
 	{
 		float rgba[] = { r, g, b, 1.0f };
-		DX11Manager::getContext().ClearRenderTargetView(
+		D3D11Manager::getContext().ClearRenderTargetView(
 			m_pRenderTargetView.Get(),
 			rgba
 		);
-		DX11Manager::getContext().ClearDepthStencilView(
+		D3D11Manager::getContext().ClearDepthStencilView(
 			m_pDepthStencilView.Get(),
 			D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
 			1.0f, 0
 		);
 	}
 
-	void DX11GraphicsContext::swapBuffers()
+	void D3D11GraphicsContext::swapBuffers()
 	{
 		present(true);
 	}
 
-	void DX11GraphicsContext::onResize(unsigned int width, unsigned int height)
+	void D3D11GraphicsContext::onResize(unsigned int width, unsigned int height)
 	{
 		m_width = width;
 		m_height = height;
@@ -72,7 +82,7 @@ namespace Marx
 		m_pRenderTargetView->Release();
 		m_pDepthStencil->Release();
 		m_pDepthStencilView->Release();
-		DX11Manager::flushContext();
+		D3D11Manager::flushContext();
 
 		MX_VERIFY_THROW_HR(
 			m_pSwapChain->ResizeBuffers(
@@ -86,11 +96,11 @@ namespace Marx
 		createDepthStencil();
 		createDepthStencilView();
 
-		setViewport();
+		setViewport(0, 0, m_width, m_height);
 		setRenderTarget();
 	}
 
-	void DX11GraphicsContext::present(bool vSyncEnabled)
+	void D3D11GraphicsContext::present(bool vSyncEnabled)
 	{
 		MX_DEBUG_HR_DECL;
 
@@ -100,10 +110,10 @@ namespace Marx
 			)
 		);
 		// Present with SWAP_EFFECT_FLIP_DISCARD unbinds the render target
-		DX11Manager::getContext().OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
+		D3D11Manager::getContext().OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
 	}
 
-	void DX11GraphicsContext::createSwapChain()
+	void D3D11GraphicsContext::createSwapChain()
 	{
 		MX_DEBUG_HR_DECL;
 
@@ -125,15 +135,15 @@ namespace Marx
 		scDesc.Flags = 0;
 
 		MX_VERIFY_THROW_HR_INFO(
-			DX11Manager::getFactory().CreateSwapChain(
-				&DX11Manager::getDevice(),
+			D3D11Manager::getFactory().CreateSwapChain(
+				&D3D11Manager::getDevice(),
 				&scDesc,
 				m_pSwapChain.GetAddressOf()
 			)
 		);
 	}
 
-	void DX11GraphicsContext::createRenderTargetView()
+	void D3D11GraphicsContext::createRenderTargetView()
 	{
 		MX_DEBUG_HR_DECL;
 
@@ -151,7 +161,7 @@ namespace Marx
 		targetDesc.Texture2D.MipSlice = 0;
 
 		MX_VERIFY_THROW_HR(
-			DX11Manager::getDevice().CreateRenderTargetView(
+			D3D11Manager::getDevice().CreateRenderTargetView(
 				pBuffer,
 				&targetDesc,
 				m_pRenderTargetView.GetAddressOf()
@@ -160,7 +170,7 @@ namespace Marx
 		pBuffer->Release();
 	}
 
-	void DX11GraphicsContext::createDepthStencil()
+	void D3D11GraphicsContext::createDepthStencil()
 	{
 		MX_DEBUG_HR_DECL;
 
@@ -178,7 +188,7 @@ namespace Marx
 		depthStencilDesc.MiscFlags = 0;
 
 		MX_VERIFY_THROW_HR(
-			DX11Manager::getDevice().CreateTexture2D(
+			D3D11Manager::getDevice().CreateTexture2D(
 				&depthStencilDesc,
 				NULL,
 				m_pDepthStencil.GetAddressOf()
@@ -186,7 +196,7 @@ namespace Marx
 		);
 	}
 
-	void DX11GraphicsContext::createDepthStencilView()
+	void D3D11GraphicsContext::createDepthStencilView()
 	{
 		MX_DEBUG_HR_DECL;
 
@@ -197,7 +207,7 @@ namespace Marx
 		depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 		MX_VERIFY_THROW_HR(
-			DX11Manager::getDevice().CreateDepthStencilView(
+			D3D11Manager::getDevice().CreateDepthStencilView(
 				m_pDepthStencil.Get(),
 				&depthStencilViewDesc,
 				m_pDepthStencilView.GetAddressOf()
@@ -205,7 +215,7 @@ namespace Marx
 		);
 	}
 
-	void DX11GraphicsContext::setViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
+	void D3D11GraphicsContext::setViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
 	{
 		m_viewport.Width = (float)width;
 		m_viewport.Height = (float)height;
@@ -217,7 +227,7 @@ namespace Marx
 		setViewport();
 	}
 
-	void DX11GraphicsContext::DX11Manager::init()
+	void D3D11GraphicsContext::D3D11Manager::init()
 	{
 		if (s_initialized > 0)
 		{
@@ -225,7 +235,7 @@ namespace Marx
 			return;
 		}
 
-		MX_CORE_WARN("DX11Manager is not initialized yet. Initializing it now");
+		MX_CORE_WARN("D3D11Manager is not initialized yet. Initializing it now");
 
 		MX_DEBUG_HR_DECL;
 
@@ -262,16 +272,16 @@ namespace Marx
 		++s_initialized;
 	}
 
-	void DX11GraphicsContext::DX11Manager::shutdown()
+	void D3D11GraphicsContext::D3D11Manager::shutdown()
 	{
-		MX_CORE_ASSERT(s_initialized > 0, "Cannot shutdown non-initialized DX11Manager!");
+		MX_CORE_ASSERT(s_initialized > 0, "Cannot shutdown non-initialized D3D11Manager!");
 		if (s_initialized > 1)
 		{
 			--s_initialized;
 			return;
 		}
 
-		MX_CORE_INFO("Shutting down DX11Manager");
+		MX_CORE_INFO("Shutting down D3D11Manager");
 
 		s_pDevice.Reset();
 		s_pContext.Reset();
@@ -279,7 +289,7 @@ namespace Marx
 		--s_initialized;
 	}
 
-	IDXGIFactory& DX11GraphicsContext::DX11Manager::getFactory()
+	IDXGIAdapter& D3D11GraphicsContext::D3D11Manager::getAdapter()
 	{
 		MX_DEBUG_HR_DECL;
 
@@ -298,9 +308,17 @@ namespace Marx
 			)
 		);
 
+		return *pDXGIAdapter;
+	}
+
+	IDXGIFactory& D3D11GraphicsContext::D3D11Manager::getFactory()
+	{
+		MX_DEBUG_HR_DECL;
+
+		auto& dxgiAdapter = getAdapter();
 		IDXGIFactory* pIDXGIFactory = nullptr;
 		MX_VERIFY_THROW_HR(
-			pDXGIAdapter->GetParent(
+			dxgiAdapter.GetParent(
 				__uuidof(IDXGIFactory),
 				(void**)&pIDXGIFactory
 			)

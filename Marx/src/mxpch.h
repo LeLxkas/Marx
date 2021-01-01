@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <fstream>
 
 #include <stdexcept>
 
@@ -24,4 +25,5 @@
 using Microsoft::WRL::ComPtr;
   #include <comdef.h>
   #include <dxgidebug.h>
+  #include <d3dcompiler.h>
 #endif

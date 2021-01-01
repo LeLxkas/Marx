@@ -19,6 +19,7 @@ namespace Marx
 		static unsigned int getWndCount() { return (unsigned int)Win32Manager::getWndCount(); }
 		static Win32Window* getWnd(unsigned int index = 0) { return Win32Manager::getWnd(index); }
 		virtual void* getNativeWindow() const override { return m_hWnd; }
+		virtual GraphicsContext& getGfxContext() const override { return *m_pContext; }
 	public:
 		inline void setEventCallback(const EventCallbackFunc& callback) override { m_eventCallback = callback; }
 	protected:

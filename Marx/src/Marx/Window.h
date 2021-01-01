@@ -28,6 +28,7 @@ namespace Marx
 		virtual unsigned int getWidth() const = 0;
 		virtual unsigned int getHeight() const = 0;
 		virtual void* getNativeWindow() const = 0;
+		virtual class GraphicsContext& getGfxContext() const = 0;
 	public:
 		virtual void shutdown() = 0;
 	public:

@@ -2,12 +2,12 @@
 
 namespace Marx
 {
-	class DX11InfoManager
+	class D3D11InfoManager
 	{
 	private:
-		DX11InfoManager();
+		D3D11InfoManager();
 	public:
-		static DX11InfoManager* get() { return s_pInfoMan; }
+		static D3D11InfoManager* get() { return s_pInfoMan; }
 	public:
 		void set() { m_setIndex = getMsgCount(); }
 		std::vector<std::string> getMessages();
@@ -18,6 +18,6 @@ namespace Marx
 		UINT64 m_setIndex;
 		class ComPtr<IDXGIInfoQueue> m_pInfoQueue;
 	private:
-		static DX11InfoManager* s_pInfoMan;
+		static D3D11InfoManager* s_pInfoMan;
 	};
 }

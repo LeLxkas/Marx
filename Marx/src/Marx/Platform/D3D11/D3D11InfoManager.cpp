@@ -1,15 +1,15 @@
 #include "mxpch.h"
-#include "DX11InfoManager.h"
+#include "D3D11InfoManager.h"
 
 #include "Marx/Exceptions/ExceptionMacros.h"
-#include "Marx/Platform/DX11/DX11InfoException.h"
-#include "Marx/Platform/DX11/DX11ExceptionMacros.h"
+#include "Marx/Platform/D3D11/D3D11InfoException.h"
+#include "Marx/Platform/D3D11/D3D11ExceptionMacros.h"
 
 namespace Marx
 {
-	DX11InfoManager* DX11InfoManager::s_pInfoMan = new DX11InfoManager;
+	D3D11InfoManager* D3D11InfoManager::s_pInfoMan = new D3D11InfoManager;
 
-	DX11InfoManager::DX11InfoManager()
+	D3D11InfoManager::D3D11InfoManager()
 	{
 		using GetDebugInterfaceFunc = HRESULT __stdcall(const IID&, void**);
 
@@ -19,7 +19,7 @@ namespace Marx
 		getDebugInterface(__uuidof(IDXGIInfoQueue), (void**)m_pInfoQueue.GetAddressOf());
 	}
 
-	std::vector<std::string> DX11InfoManager::getMessages()
+	std::vector<std::string> D3D11InfoManager::getMessages()
 	{
 		std::vector<std::string> msgs;
 		UINT64 maxIndex = getMsgCount();
@@ -30,12 +30,12 @@ namespace Marx
 		return msgs;
 	}
 
-	UINT64 DX11InfoManager::getMsgCount()
+	UINT64 D3D11InfoManager::getMsgCount()
 	{
 		return m_pInfoQueue->GetNumStoredMessagesAllowedByRetrievalFilters(DXGI_DEBUG_ALL);
 	}
 
-	std::string DX11InfoManager::getMessage(UINT64 index)
+	std::string D3D11InfoManager::getMessage(UINT64 index)
 	{
 		MX_DEBUG_HR_DECL;
 

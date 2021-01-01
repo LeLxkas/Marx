@@ -16,7 +16,9 @@ public:
 	}
 
 	void onEvent(Marx::Event& event) override
-	{}
+	{
+		//MX_TRACE("{0}", event.toString());
+	}
 };
 
 class Sandbox : public Marx::Application

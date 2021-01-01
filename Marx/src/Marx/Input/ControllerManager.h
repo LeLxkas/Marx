@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Controller.h"
-#include "XController.h"
+#include "Marx/Platform/XInput/XController.h"
+
 
 namespace Marx
 {

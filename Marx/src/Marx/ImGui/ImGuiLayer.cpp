@@ -4,7 +4,7 @@
 #include "Marx/Application.h"
 #include "Marx/Input/KeyCodes.h"
 #include "Marx/Platform/Windows/WindowsWindow.h"
-#include "Marx/Platform/DX11/DX11GraphicsContext.h"
+#include "Marx/Platform/D3D11/D3D11GraphicsContext.h"
 
 #include "backends/imgui_impl_dx11.h"
 #include "backends/imgui_impl_win32.h"
@@ -45,7 +45,7 @@ namespace Marx
 		}
 
 		// Setup Platform/Renderer backends
-		ImGui_ImplDX11_Init(&DX11GraphicsContext::DX11Manager::getDevice(), &DX11GraphicsContext::DX11Manager::getContext());
+		ImGui_ImplDX11_Init(&D3D11GraphicsContext::D3D11Manager::getDevice(), &D3D11GraphicsContext::D3D11Manager::getContext());
 		ImGui_ImplWin32_Init(Win32Window::getWnd()->getNativeWindow());
 	}
 

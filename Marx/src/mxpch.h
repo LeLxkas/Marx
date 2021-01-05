@@ -16,14 +16,3 @@
 #include <stdexcept>
 
 #include "Marx/Log.h"
-
-// Windows specific headers
-#ifdef MX_PLATFORM_WINDOWS
-  #include <Windows.h>
-  #include <wrl.h>
-  #include <d3d11.h>
-using Microsoft::WRL::ComPtr;
-  #include <comdef.h>
-  #include <dxgidebug.h>
-  #include <d3dcompiler.h>
-#endif

@@ -4,6 +4,9 @@
 
 #include "Marx/Renderer/Shader.h"
 
+#include "Marx/Platform/DX11/DX11Includes.h"
+#include "Marx/Platform/Win32/Win32Includes.h"
+
 namespace Marx
 {
 	class D3D11Shader : public Shader

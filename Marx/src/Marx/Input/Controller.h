@@ -7,11 +7,11 @@ namespace Marx
 	#define BYTE_TO_NORM_FLOAT(b) (((float)b) / 255)
 	#define SHORT_TO_NORM_FLOAT(s) (((float)s) / 32767)
 
-	enum ControllerType
+	enum class ControllerType
 	{
-		ControllerType_None = 0,
-		ControllerType_XInput,
-		ControllerType_DInput
+		None = 0,
+		XInput,
+		DInput
 	};
 
 	class MARX_API Controller

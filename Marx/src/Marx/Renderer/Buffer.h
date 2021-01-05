@@ -98,10 +98,32 @@ namespace Marx
 	class IndexBuffer
 	{
 	public:
+		enum class PrimitiveType
+		{
+			None = 0, PointList,
+			LineList, LineStrip,
+			TriangleList, TriangleStrip
+		};
+	public:
 		virtual ~IndexBuffer() {}
 		virtual void bind() const = 0;
 		virtual uint32_t getCount() const = 0;
 	public:
-		static IndexBuffer* create(uint32_t* indices, uint32_t count);
+		static IndexBuffer* create(uint32_t* indices, uint32_t count, PrimitiveType primType);
+	};
+
+	//////////////////////////////////////////
+	// ---------- ConstantBuffer ---------- //
+	//////////////////////////////////////////
+
+	class ConstantBuffer
+	{
+	public:
+		virtual ~ConstantBuffer() {}
+	public:
+		virtual void bind() const = 0;
+		virtual void update(const void* data) = 0;
+	public:
+		static ConstantBuffer* create(uint32_t slot, uint32_t size, const void* data = nullptr);
 	};
 }

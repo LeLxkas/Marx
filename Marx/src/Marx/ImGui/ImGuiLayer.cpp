@@ -3,7 +3,7 @@
 
 #include "Marx/Application.h"
 #include "Marx/Input/KeyCodes.h"
-#include "Marx/Platform/Windows/WindowsWindow.h"
+#include "Marx/Platform/Win32/Win32Window.h"
 #include "Marx/Platform/D3D11/D3D11GraphicsContext.h"
 
 #include "backends/imgui_impl_dx11.h"
@@ -45,7 +45,7 @@ namespace Marx
 		}
 
 		// Setup Platform/Renderer backends
-		ImGui_ImplDX11_Init(&D3D11GraphicsContext::D3D11Manager::getDevice(), &D3D11GraphicsContext::D3D11Manager::getContext());
+		ImGui_ImplDX11_Init(D3D11GraphicsContext::D3D11Manager::getDevice(), D3D11GraphicsContext::D3D11Manager::getContext());
 		ImGui_ImplWin32_Init(Win32Window::getWnd()->getNativeWindow());
 	}
 
@@ -72,8 +72,8 @@ namespace Marx
 	void ImGuiLayer::end()
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		Application& app = Application::get();
-		io.DisplaySize = ImVec2((float)app.getWindow().getWidth(), (float)app.getWindow().getHeight());
+		Application* app = Application::get();
+		io.DisplaySize = ImVec2((float)app->getWindow()->getWidth(), (float)app->getWindow()->getHeight());
 
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

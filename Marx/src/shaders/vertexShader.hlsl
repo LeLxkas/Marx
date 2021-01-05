@@ -1,6 +1,11 @@
+cbuffer sceneData : register(b0)
+{
+	matrix viewProjection;
+};
+
 struct VS_INPUT
 {
-	float2 pos : POSITION;
+	float3 pos : POSITION;
 	float3 color : COLOR;
 };
 
@@ -13,7 +18,7 @@ struct VS_OUTPUT
 VS_OUTPUT main(VS_INPUT inp)
 {
 	VS_OUTPUT op;
-	op.pos = float4(inp.pos, 0.0f, 1.0f);
+	op.pos = mul(float4(inp.pos, 1.0f), viewProjection);
 	op.color = float4(inp.color, 1.0f);
 	return op;
 }

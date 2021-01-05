@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Marx/Platform/DX11/DX11Includes.h"
+#include "Marx/Platform/Win32/Win32Includes.h"
+
 namespace Marx
 {
 	class D3D11InfoManager
@@ -16,7 +19,7 @@ namespace Marx
 		std::string getMessage(UINT64 index);
 	private:
 		UINT64 m_setIndex;
-		class ComPtr<IDXGIInfoQueue> m_pInfoQueue;
+		ComPtr<IDXGIInfoQueue> m_pInfoQueue;
 	private:
 		static D3D11InfoManager* s_pInfoMan;
 	};

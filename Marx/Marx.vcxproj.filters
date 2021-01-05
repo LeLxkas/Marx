@@ -88,15 +88,6 @@
     <ClInclude Include="src\Marx\Log.h">
       <Filter>Marx</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marx\Platform\Windows\HrException.h">
-      <Filter>Marx\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h">
-      <Filter>Marx\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h">
-      <Filter>Marx\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\Marx\Window.h">
       <Filter>Marx</Filter>
     </ClInclude>
@@ -120,6 +111,23 @@
       <Filter>Marx\Platform\DX11</Filter>
     </ClInclude>
     <ClInclude Include="src\Marx\Platform\D3D11\D3D11Shader.h" />
+    <ClInclude Include="src\Marx\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Marx\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Marx\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11VertexArray.h" />
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11RendererAPI.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11Includes.h" />
+    <ClInclude Include="src\Marx\Platform\Win32\HrException.h">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\Win32\Win32Input.h">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\Win32\Win32Window.h">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Marx\Platform\Win32\Win32Includes.h" />
+    <ClInclude Include="src\Marx\Renderer\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">
@@ -143,12 +151,6 @@
     <ClCompile Include="src\Marx\Log.cpp">
       <Filter>Marx</Filter>
     </ClCompile>
-    <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp">
-      <Filter>Marx\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp">
-      <Filter>Marx\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="src\mxpch.cpp" />
     <ClCompile Include="src\Marx\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Marx\Renderer\Renderer.cpp" />
@@ -162,5 +164,17 @@
       <Filter>Marx\Platform\DX11</Filter>
     </ClCompile>
     <ClCompile Include="src\Marx\Platform\D3D11\D3D11Shader.cpp" />
+    <ClCompile Include="src\Marx\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Marx\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Marx\Platform\D3D11\D3D11VertexArray.cpp" />
+    <ClCompile Include="src\Marx\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Marx\Platform\D3D11\D3D11RendererAPI.cpp" />
+    <ClCompile Include="src\Marx\Platform\Win32\Win32Input.cpp">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Platform\Win32\Win32Window.cpp">
+      <Filter>Marx\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Marx\Renderer\Camera.cpp" />
   </ItemGroup>
 </Project>

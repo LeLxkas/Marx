@@ -2,6 +2,9 @@
 
 #include "Marx/Renderer/GraphicsContext.h"
 
+#include "Marx/Platform/DX11/DX11Includes.h"
+#include "Marx/Platform/Win32/Win32Includes.h"
+
 namespace Marx
 {
 	class D3D11GraphicsContext : public GraphicsContext
@@ -12,9 +15,12 @@ namespace Marx
 	public:
 		virtual void init() override;
 		virtual void shutdown() override;
-		virtual void clear(float r, float g, float b) override;
+		virtual void clear(float color[4]) override;
 		virtual void swapBuffers() override;
 		virtual void onResize(unsigned int width, unsigned int height);
+	public:
+		static GraphicsContext* get(uint32_t index = 0) { return s_contexts[index]; }
+		static uint32_t getCount() { return (uint32_t)s_contexts.size(); }
 	private:
 		void present(bool vSyncEnabled);
 		void createSwapChain();
@@ -22,9 +28,9 @@ namespace Marx
 		void createDepthStencil();
 		void createDepthStencilView();
 		void setViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
-		inline void setViewport() { D3D11Manager::getContext().RSSetViewports(1, &m_viewport); }
-		inline void unsetRenderTarget() { ID3D11RenderTargetView* nullViews[] = { nullptr }; D3D11Manager::getContext().OMSetRenderTargets(1, nullViews, NULL); }
-		inline void setRenderTarget() { D3D11Manager::getContext().OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get()); }
+		inline void setViewport() { D3D11Manager::getContext()->RSSetViewports(1, &m_viewport); }
+		inline void unsetRenderTarget() { ID3D11RenderTargetView* nullViews[] = { nullptr }; D3D11Manager::getContext()->OMSetRenderTargets(1, nullViews, NULL); }
+		inline void setRenderTarget() { D3D11Manager::getContext()->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get()); }
 	private:
 		DISABLE_DLL_INTERFACE_WARN;
 		ComPtr<IDXGISwapChain> m_pSwapChain;
@@ -38,6 +44,8 @@ namespace Marx
 		unsigned int m_width;
 		unsigned int m_height;
 		bool m_initialized = false;
+	private:
+		static std::vector<D3D11GraphicsContext*> s_contexts;
 	public:
 		class D3D11Manager
 		{
@@ -45,10 +53,10 @@ namespace Marx
 			static void init();
 			static void shutdown();
 		public:
-			inline static ID3D11Device& getDevice() { return *s_pDevice.Get(); }
-			inline static ID3D11DeviceContext& getContext() { return *s_pContext.Get(); }
-			static IDXGIAdapter& getAdapter();
-			static IDXGIFactory& getFactory();
+			inline static ID3D11Device* getDevice() { return s_pDevice.Get(); }
+			inline static ID3D11DeviceContext* getContext() { return s_pContext.Get(); }
+			static IDXGIAdapter* getAdapter();
+			static IDXGIFactory* getFactory();
 		public:
 			inline static void flushContext() { s_pContext->Flush(); }
 		private:

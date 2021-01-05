@@ -1,18 +1,29 @@
 #pragma once
 
+#include "RenderCommand.h"
+
+#include "Camera.h"
+#include "Shader.h"
+#include "VertexArray.h"
+#include "Marx/Platform/D3D11/D3D11Buffer.h"
+
 namespace Marx
 {
-	enum class RendererAPI
-	{
-		None = 0,
-		D3D11 = 1
-	};
 
 	class Renderer
 	{
 	public:
-		inline static RendererAPI getAPI() { return s_rendererAPI; }
+		static void beginScene(const OrthographicCamera& camera);
+		static void endScene();
+	public:
+		static void submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+	public:
+		inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 	private:
-		static RendererAPI s_rendererAPI;
+		struct SceneData
+		{
+			DX::XMMATRIX viewProjectionMatrix;
+		};
+		static SceneData* s_sceneData;
 	};
 }

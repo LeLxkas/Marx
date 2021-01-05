@@ -12,11 +12,10 @@ namespace Marx
 		Win32Window(const WindowDesc& desc);
 		virtual ~Win32Window();
 	public:
-		virtual void clear(float r, float g, float b) override;
 		virtual void onUpdate() override;
 		inline unsigned int getWidth() const override { return m_width; }
 		inline unsigned int getHeight() const override { return m_height; }
-		static unsigned int getWndCount() { return (unsigned int)Win32Manager::getWndCount(); }
+		virtual uint32_t getWndCount() const override { return (uint32_t)Win32Manager::getWndCount(); }
 		static Win32Window* getWnd(unsigned int index = 0) { return Win32Manager::getWnd(index); }
 		virtual void* getNativeWindow() const override { return m_hWnd; }
 		virtual GraphicsContext& getGfxContext() const override { return *m_pContext; }

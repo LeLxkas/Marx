@@ -2,6 +2,9 @@
 
 #include "Marx/Renderer/Buffer.h"
 
+#include "Marx/Platform/DX11/DX11Includes.h"
+#include "Marx/Platform/Win32/Win32Includes.h"
+
 namespace Marx
 {
 	static DXGI_FORMAT shaderDataTypeToDXGI_FORMAT(ShaderDataType type)
@@ -72,7 +75,7 @@ namespace Marx
 	class DX11IndexBuffer : public IndexBuffer
 	{
 	public:
-		DX11IndexBuffer(uint32_t* indices, uint32_t count);
+		DX11IndexBuffer(uint32_t* indices, uint32_t count, PrimitiveType primType);
 		virtual ~DX11IndexBuffer();
 	public:
 		virtual void bind() const override;
@@ -80,5 +83,40 @@ namespace Marx
 	public:
 		uint32_t m_count;
 		ComPtr<ID3D11Buffer> m_pIndexBuffer;
+		D3D11_PRIMITIVE_TOPOLOGY m_primitiveTopology;
+	};
+
+	static D3D11_PRIMITIVE_TOPOLOGY primitiveTypeToD3D11PrimitiveTopology(IndexBuffer::PrimitiveType primType)
+	{
+		using PT = IndexBuffer::PrimitiveType;
+		switch (primType)
+		{
+		case PT::None: return D3D11_PRIMITIVE_TOPOLOGY_UNDEFINED;
+		case PT::PointList: return D3D11_PRIMITIVE_TOPOLOGY_POINTLIST;
+		case PT::LineList: return D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
+		case PT::LineStrip: return D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP;
+		case PT::TriangleList: return D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+		case PT::TriangleStrip: return D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+		}
+
+		MX_CORE_ASSERT(false, "Unknown PrimitiveType!");
+		return D3D11_PRIMITIVE_TOPOLOGY_UNDEFINED;
+	}
+
+	//////////////////////////////////////////
+	// ---------- ConstantBuffer ---------- //
+	//////////////////////////////////////////
+
+	class D3D11ConstantBuffer : public ConstantBuffer
+	{
+	public:
+		D3D11ConstantBuffer(uint32_t slot, uint32_t size, const void* data);
+	public:
+		virtual void bind() const override;
+		virtual void update(const void* data) override;
+	private:
+		uint32_t m_slot;
+		uint32_t m_size;
+		ComPtr<ID3D11Buffer> m_pBuffer;
 	};
 }

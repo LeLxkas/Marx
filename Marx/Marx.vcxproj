@@ -158,6 +158,10 @@
     <ClInclude Include="src\Marx\Input\ControllerManager.h" />
     <ClInclude Include="src\Marx\Input\KeyCodes.h" />
     <ClInclude Include="src\Marx\Input\MouseCodes.h" />
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11RendererAPI.h" />
+    <ClInclude Include="src\Marx\Platform\D3D11\D3D11VertexArray.h" />
+    <ClInclude Include="src\Marx\Platform\DX11\DX11Includes.h" />
+    <ClInclude Include="src\Marx\Platform\Win32\Win32Includes.h" />
     <ClInclude Include="src\Marx\Platform\XInput\XController.h" />
     <ClInclude Include="src\Marx\Layer.h" />
     <ClInclude Include="src\Marx\LayerStack.h" />
@@ -167,14 +171,18 @@
     <ClInclude Include="src\Marx\Platform\D3D11\D3D11GraphicsContext.h" />
     <ClInclude Include="src\Marx\Platform\D3D11\D3D11InfoException.h" />
     <ClInclude Include="src\Marx\Platform\D3D11\D3D11InfoManager.h" />
-    <ClInclude Include="src\Marx\Platform\Windows\HrException.h" />
-    <ClInclude Include="src\Marx\Platform\Windows\WindowsInput.h" />
-    <ClInclude Include="src\Marx\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Marx\Platform\Win32\HrException.h" />
+    <ClInclude Include="src\Marx\Platform\Win32\Win32Input.h" />
+    <ClInclude Include="src\Marx\Platform\Win32\Win32Window.h" />
     <ClInclude Include="src\Marx\Renderer\Buffer.h" />
     <ClInclude Include="src\Marx\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Marx\Renderer\Camera.h" />
+    <ClInclude Include="src\Marx\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Marx\Renderer\Renderer.h" />
     <ClInclude Include="src\Marx\Platform\D3D11\D3D11Shader.h" />
+    <ClInclude Include="src\Marx\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Marx\Renderer\Shader.h" />
+    <ClInclude Include="src\Marx\Renderer\VertexArray.h" />
     <ClInclude Include="src\Marx\Window.h" />
     <ClInclude Include="src\mxpch.h" />
   </ItemGroup>
@@ -183,6 +191,8 @@
     <ClCompile Include="src\Marx\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Marx\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Marx\Input\ControllerManager.cpp" />
+    <ClCompile Include="src\Marx\Platform\D3D11\D3D11RendererAPI.cpp" />
+    <ClCompile Include="src\Marx\Platform\D3D11\D3D11VertexArray.cpp" />
     <ClCompile Include="src\Marx\Platform\XInput\XController.cpp" />
     <ClCompile Include="src\Marx\Layer.cpp" />
     <ClCompile Include="src\Marx\LayerStack.cpp" />
@@ -190,12 +200,16 @@
     <ClCompile Include="src\Marx\Platform\D3D11\D3D11Buffer.cpp" />
     <ClCompile Include="src\Marx\Platform\D3D11\D3D11GraphicsContext.cpp" />
     <ClCompile Include="src\Marx\Platform\D3D11\D3D11InfoManager.cpp" />
-    <ClCompile Include="src\Marx\Platform\Windows\WindowsInput.cpp" />
-    <ClCompile Include="src\Marx\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Marx\Platform\Win32\Win32Input.cpp" />
+    <ClCompile Include="src\Marx\Platform\Win32\Win32Window.cpp" />
     <ClCompile Include="src\Marx\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Marx\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Marx\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Marx\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Marx\Platform\D3D11\D3D11Shader.cpp" />
+    <ClCompile Include="src\Marx\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Marx\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Marx\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\mxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

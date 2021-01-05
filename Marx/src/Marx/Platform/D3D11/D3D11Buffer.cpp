@@ -26,7 +26,7 @@ namespace Marx
 		vbInitData.SysMemPitch = 0;
 		vbInitData.SysMemSlicePitch = 0;
 		MX_VERIFY_THROW_HR_INFO(
-			D3D11GraphicsContext::D3D11Manager::getDevice().CreateBuffer(
+			D3D11GraphicsContext::D3D11Manager::getDevice()->CreateBuffer(
 				&vertexBufferDesc, &vbInitData,
 				m_pVertexBuffer.GetAddressOf()
 			)
@@ -39,8 +39,8 @@ namespace Marx
 	void D3D11VertexBuffer::bind() const
 	{
 		uint32_t offset = 0;
-		D3D11GraphicsContext::D3D11Manager::getContext().IASetVertexBuffers(0, 1, m_pVertexBuffer.GetAddressOf(), &m_stride, &offset);
-		D3D11GraphicsContext::D3D11Manager::getContext().IASetInputLayout(m_pInputLayout.Get());
+		D3D11GraphicsContext::D3D11Manager::getContext()->IASetVertexBuffers(0, 1, m_pVertexBuffer.GetAddressOf(), &m_stride, &offset);
+		D3D11GraphicsContext::D3D11Manager::getContext()->IASetInputLayout(m_pInputLayout.Get());
 	}
 
 	void D3D11VertexBuffer::setLayout(const BufferLayout& layout)
@@ -51,7 +51,7 @@ namespace Marx
 		ComPtr<ID3DBlob> dummyShader = genDummyShader(layout);
 
 		MX_VERIFY_THROW_HR_INFO(
-			D3D11GraphicsContext::D3D11Manager::getDevice().CreateInputLayout(
+			D3D11GraphicsContext::D3D11Manager::getDevice()->CreateInputLayout(
 				elementDesc.data(), (UINT)elementDesc.size(),
 				dummyShader->GetBufferPointer(), dummyShader->GetBufferSize(),
 				m_pInputLayout.GetAddressOf()
@@ -97,7 +97,7 @@ namespace Marx
 	// ---------- IndexBuffer ---------- //
 	///////////////////////////////////////
 	
-	DX11IndexBuffer::DX11IndexBuffer(uint32_t* indices, uint32_t count)
+	DX11IndexBuffer::DX11IndexBuffer(uint32_t* indices, uint32_t count, PrimitiveType primType)
 		: m_count(count)
 	{
 		MX_DEBUG_HR_DECL;
@@ -115,10 +115,12 @@ namespace Marx
 		ibInitData.SysMemSlicePitch = 0;
 
 		MX_VERIFY_THROW_HR_INFO(
-			D3D11GraphicsContext::D3D11Manager::getDevice().CreateBuffer(
+			D3D11GraphicsContext::D3D11Manager::getDevice()->CreateBuffer(
 				&indexBufferDesc, &ibInitData, m_pIndexBuffer.GetAddressOf()
 			)
 		);
+
+		m_primitiveTopology = primitiveTypeToD3D11PrimitiveTopology(primType);
 	}
 
 	DX11IndexBuffer::~DX11IndexBuffer()
@@ -126,6 +128,46 @@ namespace Marx
 
 	void DX11IndexBuffer::bind() const
 	{
-		D3D11GraphicsContext::D3D11Manager::getContext().IASetIndexBuffer(m_pIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		D3D11GraphicsContext::D3D11Manager::getContext()->IASetIndexBuffer(m_pIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		D3D11GraphicsContext::D3D11Manager::getContext()->IASetPrimitiveTopology(m_primitiveTopology);
+	}
+
+	//////////////////////////////////////////
+	// ---------- ConstantBuffer ---------- //
+	//////////////////////////////////////////
+
+	D3D11ConstantBuffer::D3D11ConstantBuffer(uint32_t slot, uint32_t size, const void* data)
+		: m_slot(slot), m_size(size)
+	{
+		MX_DEBUG_HR_DECL;
+
+		MX_CORE_ASSERT(size % 16 == 0, "The size must be a multiple of 16");
+
+		D3D11_BUFFER_DESC bd = { 0 };
+		bd.ByteWidth = size;
+		bd.Usage = D3D11_USAGE_DEFAULT;
+		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bd.CPUAccessFlags = 0;
+		bd.MiscFlags = 0;
+
+		D3D11_SUBRESOURCE_DATA sd;
+		sd.pSysMem = data;
+		D3D11_SUBRESOURCE_DATA* pSd = data ? &sd : nullptr;
+
+		MX_VERIFY_THROW_HR_INFO(
+			D3D11GraphicsContext::D3D11Manager::getDevice()->CreateBuffer(
+				&bd, pSd, m_pBuffer.GetAddressOf()
+			)
+		);
+	}
+
+	void D3D11ConstantBuffer::bind() const
+	{
+		D3D11GraphicsContext::D3D11Manager::getContext()->VSSetConstantBuffers(m_slot, 1, m_pBuffer.GetAddressOf());
+	}
+
+	void D3D11ConstantBuffer::update(const void* data)
+	{
+		D3D11GraphicsContext::D3D11Manager::getContext()->UpdateSubresource(m_pBuffer.Get(), 0, NULL, data, 0, 0);
 	}
 }

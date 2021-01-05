@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Marx/Platform/Windows/HrException.h"
+#include "Marx/Platform/Win32/HrException.h"
 
 namespace Marx
 {

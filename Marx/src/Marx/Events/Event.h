@@ -64,7 +64,7 @@ namespace Marx
 	public:
 		bool handled = false;
 	protected:
-		Window* m_pWnd;
+		Window* m_pWnd = nullptr;
 	};
 
 	class MARX_API EventDispatcher

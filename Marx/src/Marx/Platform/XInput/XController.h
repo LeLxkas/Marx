@@ -14,11 +14,11 @@ namespace Marx
 		{}
 	public:
 		bool onUpdate() override;
-		ControllerButtonState buttonState(ControllerButton btn) const override { return m_cState.button[btn]; }
-		ControllerStickState stickState(ControllerStick stick) const override { return m_cState.stick[stick]; }
-		float triggerState(ControllerTrigger trigger) const override { return m_cState.trigger[trigger]; }
+		ControllerButtonState buttonState(ControllerButton btn) const override { return m_cState.button[(uint32_t)btn]; }
+		ControllerStickState stickState(ControllerStick stick) const override { return m_cState.stick[(uint32_t)stick]; }
+		float triggerState(ControllerTrigger trigger) const override { return m_cState.trigger[(uint32_t)trigger]; }
 	public:
-		ControllerType getType() const override { return ControllerType_XInput; }
+		ControllerType getType() const override { return ControllerType::XInput; }
 	private:
 		DWORD m_uid;
 		XINPUT_STATE* m_pStateNew;
@@ -26,7 +26,7 @@ namespace Marx
 		XINPUT_STATE m_states[2];
 		struct ControllerState
 		{
-			ControllerButtonState button[ControllerButton_Count];
+			ControllerButtonState button[(uint32_t)ControllerButton::Count];
 			float trigger[2];
 			ControllerStickState stick[2];
 		} m_cState;

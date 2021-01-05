@@ -1,5 +1,5 @@
 #include "mxpch.h"
-#include "WindowsInput.h"
+#include "Win32Input.h"
 
 #include "Marx/Application.h"
 
@@ -24,7 +24,7 @@ namespace Marx
 	{
 		POINT p;
 		GetCursorPos(&p);
-		ScreenToClient(static_cast<HWND>(Application::get().getWindow().getNativeWindow()), &p);
+		ScreenToClient(static_cast<HWND>(Application::get()->getWindow()->getNativeWindow()), &p);
 		return { (float)p.x, (float)p.y };
 	}
 

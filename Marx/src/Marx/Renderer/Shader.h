@@ -5,6 +5,8 @@ namespace Marx
 	class Shader
 	{
 	public:
+		static Shader* create(const std::string& vertexSrc, const std::string& pixelSrc);
+	public:
 		virtual ~Shader() {};
 	public:
 		virtual void bind() const = 0;

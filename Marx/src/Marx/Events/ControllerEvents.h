@@ -68,7 +68,7 @@ namespace Marx
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "ControllerTriggerMove[" << getID() << "]: " << getTrigger() << " (" << getDelta() << ")";
+			ss << "ControllerTriggerMove[" << getID() << "]: " << (uint32_t)getTrigger() << " (" << getDelta() << ")";
 			return ss.str();
 		}
 
@@ -92,7 +92,7 @@ namespace Marx
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "ControllerStickMove[" << getID() << "]: " << getStick() << " (" << getState().x << ", " << getState().y << ")";
+			ss << "ControllerStickMove[" << getID() << "]: " << (uint32_t)getStick() << " (" << getState().x << ", " << getState().y << ")";
 			return ss.str();
 		}
 
@@ -127,7 +127,7 @@ namespace Marx
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "ControllerButtonPress[" << getID() << "]: " << getButton();
+			ss << "ControllerButtonPress[" << getID() << "]: " << (uint32_t)getButton();
 			return ss.str();
 		}
 
@@ -144,7 +144,7 @@ namespace Marx
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "ControllerButtonRelease[" << getID() << "]: " << m_button;
+			ss << "ControllerButtonRelease[" << getID() << "]: " << (uint32_t)m_button;
 			return ss.str();
 		}
 

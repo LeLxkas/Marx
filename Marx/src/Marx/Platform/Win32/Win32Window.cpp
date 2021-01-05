@@ -1,5 +1,5 @@
 #include "mxpch.h"
-#include "WindowsWindow.h"
+#include "Win32Window.h"
 
 #include "Marx/Exceptions/MarxException.h"
 #include "Marx/Exceptions/ExceptionMacros.h"
@@ -30,11 +30,6 @@ namespace Marx
 	Win32Window::~Win32Window()
 	{
 		shutdown();
-	}
-
-	void Win32Window::clear(float r, float g, float b)
-	{
-		m_pContext->clear(r, g, b);
 	}
 
 	void Win32Window::onUpdate()
@@ -116,6 +111,8 @@ namespace Marx
 
 	LRESULT Win32Window::wndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
+		ImGuiIO* pIO = ImGui::GetCurrentContext() ? &ImGui::GetIO() : nullptr;
+
 		switch (uMsg)
 		{
 			// ---------- WINDOW MESSAGES ----------
@@ -123,7 +120,7 @@ namespace Marx
 		{
 			WindowCloseEvent event(this);
 			m_eventCallback(event);
-			break;
+			return 0;
 		}
 		case WM_DESTROY:
 		{
@@ -131,7 +128,7 @@ namespace Marx
 			{
 				PostQuitMessage(0);
 			}
-			break;
+			return 0;
 		}
 		case WM_SIZE:
 		{
@@ -148,124 +145,135 @@ namespace Marx
 				WindowResizeEvent event(this, width, height);
 				m_eventCallback(event);
 			}
-			break;
+			return 0;
 		}
 		case WM_SETFOCUS:
 		{
 			WindowFocusEvent event(this);
 			m_eventCallback(event);
-			break;
+			return 0;
 		}
 		case WM_KILLFOCUS:
 		{
 			WindowFocusLossEvent event(this);
 			m_eventCallback(event);
-			break;
+			return 0;
 		}
-		// ---------- KEYBOARD MESSAGES ----------
-		case WM_KEYDOWN:
-		case WM_SYSKEYDOWN:
+		}
+
+		if (!pIO || !pIO->WantCaptureKeyboard)
 		{
-			int isRepeat = (lParam >> 30) & 1;
-			KeyPressEvent event(this, (int)wParam, isRepeat);
-			m_eventCallback(event);
-			break;
+			switch (uMsg)
+			{
+				// ----------KEYBOARD MESSAGES----------
+			case WM_KEYDOWN:
+			case WM_SYSKEYDOWN:
+			{
+				int isRepeat = (lParam >> 30) & 1;
+				KeyPressEvent event(this, (int)wParam, isRepeat);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_KEYUP:
+			case WM_SYSKEYUP:
+			{
+				KeyReleaseEvent event(this, (int)wParam);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_CHAR:
+			{
+				KeyTypeEvent event(this, (int)wParam);
+				m_eventCallback(event);
+				return 0;
+			}
+			}
 		}
-		case WM_KEYUP:
-		case WM_SYSKEYUP:
+
+		if (!pIO || !pIO->WantCaptureMouse)
 		{
-			KeyReleaseEvent event(this, (int)wParam);
-			m_eventCallback(event);
-			break;
+			switch (uMsg)
+			{
+				// ---------- MOUSE MESSAGES ----------
+			case WM_LBUTTONDOWN:
+			{
+				MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_LEFT);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_MBUTTONDOWN:
+			{
+				MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_MID);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_RBUTTONDOWN:
+			{
+				MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_RIGHT);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_XBUTTONDOWN:
+			{
+				int x = HIWORD(wParam);
+				int btn = (x == XBUTTON1) ? MX_MOUSE_BUTTON_X1 : MX_MOUSE_BUTTON_X2;
+				MouseButtonPressEvent event(this, btn);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_LBUTTONUP:
+			{
+				MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_LEFT);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_MBUTTONUP:
+			{
+				MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_MID);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_RBUTTONUP:
+			{
+				MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_RIGHT);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_XBUTTONUP:
+			{
+				int x = HIWORD(wParam);
+				int btn = (x == XBUTTON1) ? MX_MOUSE_BUTTON_X1 : MX_MOUSE_BUTTON_X2;
+				MouseButtonReleaseEvent event(this, btn);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_MOUSEWHEEL:
+			{
+				float delta = GET_WHEEL_DELTA_WPARAM(wParam);
+				delta /= WHEEL_DELTA;
+				MouseScrollEvent event(this, delta);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_MOUSEHWHEEL:
+			{
+				float delta = GET_WHEEL_DELTA_WPARAM(wParam);
+				delta /= WHEEL_DELTA;
+				MouseHScrollEvent event(this, delta);
+				m_eventCallback(event);
+				return 0;
+			}
+			case WM_MOUSEMOVE:
+			{
+				POINTS p = MAKEPOINTS(lParam);
+				MouseMoveEvent event(this, (float)p.x, (float)p.y);
+				m_eventCallback(event);
+				return 0;
+			}
+			}
 		}
-		case WM_CHAR:
-		{
-			KeyTypeEvent event(this, (int)wParam);
-			m_eventCallback(event);
-			break;
-		}
-		// ---------- MOUSE MESSAGES ----------
-		case WM_LBUTTONDOWN:
-		{
-			MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_LEFT);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_MBUTTONDOWN:
-		{
-			MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_MID);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_RBUTTONDOWN:
-		{
-			MouseButtonPressEvent event(this, MX_MOUSE_BUTTON_RIGHT);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_XBUTTONDOWN:
-		{
-			int x = HIWORD(wParam);
-			int btn = (x == XBUTTON1) ? MX_MOUSE_BUTTON_X1 : MX_MOUSE_BUTTON_X2;
-			MouseButtonPressEvent event(this, btn);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_LBUTTONUP:
-		{
-			MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_LEFT);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_MBUTTONUP:
-		{
-			MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_MID);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_RBUTTONUP:
-		{
-			MouseButtonReleaseEvent event(this, MX_MOUSE_BUTTON_RIGHT);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_XBUTTONUP:
-		{
-			int x = HIWORD(wParam);
-			int btn = (x == XBUTTON1) ? MX_MOUSE_BUTTON_X1 : MX_MOUSE_BUTTON_X2;
-			MouseButtonReleaseEvent event(this, btn);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_MOUSEWHEEL:
-		{
-			float delta = GET_WHEEL_DELTA_WPARAM(wParam);
-			delta /= WHEEL_DELTA;
-			MouseScrollEvent event(this, delta);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_MOUSEHWHEEL:
-		{
-			float delta = GET_WHEEL_DELTA_WPARAM(wParam);
-			delta /= WHEEL_DELTA;
-			MouseHScrollEvent event(this, delta);
-			m_eventCallback(event);
-			break;
-		}
-		case WM_MOUSEMOVE:
-		{
-			POINTS p = MAKEPOINTS(lParam);
-			MouseMoveEvent event(this, (float)p.x, (float)p.y);
-			m_eventCallback(event);
-			break;
-		} 
-		// ---------- MISC ----------
-		// ---------- DEFAULT BEHAVIOR ----------
-		default:
-			return DefWindowProc(hWnd, uMsg, wParam, lParam);
-		}
-		return 0;
+			
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 
 	void Win32Window::Win32Manager::init()

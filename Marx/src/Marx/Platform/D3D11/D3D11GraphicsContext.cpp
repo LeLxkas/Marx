@@ -1,13 +1,14 @@
 #include "mxpch.h"
 #include "D3D11GraphicsContext.h"
 
-#include "Marx/Exceptions/ExceptionMacros.h"
 #include "Marx/Platform/D3D11/D3D11InfoException.h"
 #include "Marx/Platform/D3D11/D3D11ExceptionMacros.h"
 #include "Marx/Platform/D3D11/D3D11InfoManager.h"
 
 namespace Marx
 {
+	std::vector<D3D11GraphicsContext*> D3D11GraphicsContext::s_contexts;
+
 	D3D11GraphicsContext::D3D11GraphicsContext(HWND wndHandle)
 		: m_wndHandle(wndHandle)
 	{
@@ -15,10 +16,21 @@ namespace Marx
 		GetClientRect(wndHandle, &rect);
 		m_width = rect.right - rect.left;
 		m_height = rect.bottom - rect.top;
+
+		s_contexts.push_back(this);
 	}
 
 	D3D11GraphicsContext::~D3D11GraphicsContext()
-	{}
+	{
+		for (uint32_t i = 0; i < s_contexts.size(); ++i)
+		{
+			if (s_contexts[i] == this)
+			{
+				s_contexts.erase(s_contexts.begin() + i);
+				break;
+			}
+		}
+	}
 
 	void D3D11GraphicsContext::init()
 	{
@@ -26,9 +38,9 @@ namespace Marx
 		D3D11Manager::init();
 
 		{
-			auto& adapter = D3D11Manager::getAdapter();
+			auto adapter = D3D11Manager::getAdapter();
 			DXGI_ADAPTER_DESC adapterDesc;
-			adapter.GetDesc(&adapterDesc);
+			adapter->GetDesc(&adapterDesc);
 			_bstr_t conv(adapterDesc.Description);
 			const char* description = conv;
 			MX_CORE_TRACE("D3D11 Renderer: {0}", description);
@@ -52,14 +64,13 @@ namespace Marx
 		m_initialized = false;
 	}
 
-	void D3D11GraphicsContext::clear(float r, float g, float b)
+	void D3D11GraphicsContext::clear(float color[4])
 	{
-		float rgba[] = { r, g, b, 1.0f };
-		D3D11Manager::getContext().ClearRenderTargetView(
+		D3D11Manager::getContext()->ClearRenderTargetView(
 			m_pRenderTargetView.Get(),
-			rgba
+			color
 		);
-		D3D11Manager::getContext().ClearDepthStencilView(
+		D3D11Manager::getContext()->ClearDepthStencilView(
 			m_pDepthStencilView.Get(),
 			D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
 			1.0f, 0
@@ -110,7 +121,7 @@ namespace Marx
 			)
 		);
 		// Present with SWAP_EFFECT_FLIP_DISCARD unbinds the render target
-		D3D11Manager::getContext().OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
+		D3D11Manager::getContext()->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
 	}
 
 	void D3D11GraphicsContext::createSwapChain()
@@ -135,8 +146,8 @@ namespace Marx
 		scDesc.Flags = 0;
 
 		MX_VERIFY_THROW_HR_INFO(
-			D3D11Manager::getFactory().CreateSwapChain(
-				&D3D11Manager::getDevice(),
+			D3D11Manager::getFactory()->CreateSwapChain(
+				D3D11Manager::getDevice(),
 				&scDesc,
 				m_pSwapChain.GetAddressOf()
 			)
@@ -161,7 +172,7 @@ namespace Marx
 		targetDesc.Texture2D.MipSlice = 0;
 
 		MX_VERIFY_THROW_HR(
-			D3D11Manager::getDevice().CreateRenderTargetView(
+			D3D11Manager::getDevice()->CreateRenderTargetView(
 				pBuffer,
 				&targetDesc,
 				m_pRenderTargetView.GetAddressOf()
@@ -188,7 +199,7 @@ namespace Marx
 		depthStencilDesc.MiscFlags = 0;
 
 		MX_VERIFY_THROW_HR(
-			D3D11Manager::getDevice().CreateTexture2D(
+			D3D11Manager::getDevice()->CreateTexture2D(
 				&depthStencilDesc,
 				NULL,
 				m_pDepthStencil.GetAddressOf()
@@ -207,7 +218,7 @@ namespace Marx
 		depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 		MX_VERIFY_THROW_HR(
-			D3D11Manager::getDevice().CreateDepthStencilView(
+			D3D11Manager::getDevice()->CreateDepthStencilView(
 				m_pDepthStencil.Get(),
 				&depthStencilViewDesc,
 				m_pDepthStencilView.GetAddressOf()
@@ -289,7 +300,7 @@ namespace Marx
 		--s_initialized;
 	}
 
-	IDXGIAdapter& D3D11GraphicsContext::D3D11Manager::getAdapter()
+	IDXGIAdapter* D3D11GraphicsContext::D3D11Manager::getAdapter()
 	{
 		MX_DEBUG_HR_DECL;
 
@@ -308,22 +319,22 @@ namespace Marx
 			)
 		);
 
-		return *pDXGIAdapter;
+		return pDXGIAdapter;
 	}
 
-	IDXGIFactory& D3D11GraphicsContext::D3D11Manager::getFactory()
+	IDXGIFactory* D3D11GraphicsContext::D3D11Manager::getFactory()
 	{
 		MX_DEBUG_HR_DECL;
 
-		auto& dxgiAdapter = getAdapter();
+		auto dxgiAdapter = getAdapter();
 		IDXGIFactory* pIDXGIFactory = nullptr;
 		MX_VERIFY_THROW_HR(
-			dxgiAdapter.GetParent(
+			dxgiAdapter->GetParent(
 				__uuidof(IDXGIFactory),
 				(void**)&pIDXGIFactory
 			)
 		);
 
-		return *pIDXGIFactory;
+		return pIDXGIFactory;
 	}
 }

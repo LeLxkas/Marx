@@ -272,7 +272,8 @@ namespace Marx
 			}
 			}
 		}
-			
+		
+		// Default behavior
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 

@@ -6,6 +6,9 @@
 #include "Marx/Layer.h"
 #include "Marx/Log.h"
 
+// Core
+#include "Marx/Core/Timestep.h"
+
 // Input
 #include "Marx/Input/MouseCodes.h"
 #include "Marx/Input/KeyCodes.h"

@@ -143,6 +143,7 @@
     <ClInclude Include="src\Marx.h" />
     <ClInclude Include="src\Marx\Application.h" />
     <ClInclude Include="src\Marx\Core.h" />
+    <ClInclude Include="src\Marx\Core\Timestep.h" />
     <ClInclude Include="src\Marx\EntryPoint.h" />
     <ClInclude Include="src\Marx\Events\ControllerEvents.h" />
     <ClInclude Include="src\Marx\Events\Event.h" />

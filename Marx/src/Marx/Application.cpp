@@ -12,6 +12,7 @@ namespace Marx
 	Application* Application::s_instance = nullptr;
 
 	Application::Application()
+		: m_timestep(Timestep::secondsSinceProgramStartup())
 	{
 		MX_CORE_ASSERT(!s_instance, "Application already exists!");
 		s_instance = this;
@@ -36,8 +37,10 @@ namespace Marx
 
 		while (m_running)
 		{
+			m_timestep.update(Timestep::secondsSinceProgramStartup());
+
 			for (Layer* layer : m_layerStack)
-				layer->onUpdate();
+				layer->onUpdate(m_timestep);
 
 			m_pImGuiLayer->begin();
 			for (Layer* layer : m_layerStack)

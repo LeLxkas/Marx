@@ -128,6 +128,7 @@
     </ClInclude>
     <ClInclude Include="src\Marx\Platform\Win32\Win32Includes.h" />
     <ClInclude Include="src\Marx\Renderer\Camera.h" />
+    <ClInclude Include="src\Marx\Core\Timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Marx\Application.cpp">

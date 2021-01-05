@@ -2,6 +2,7 @@
 
 #include "Marx/Core.h"
 #include "Marx/Events/Event.h"
+#include "Marx/Core/Timestep.h"
 
 namespace Marx
 {
@@ -13,7 +14,7 @@ namespace Marx
 
 		virtual void onAttach() {}
 		virtual void onDetach() {}
-		virtual void onUpdate() {}
+		virtual void onUpdate(Timestep ts) {}
 		virtual void onImGuiRender() {}
 		virtual void onEvent(Event& event) {}
 

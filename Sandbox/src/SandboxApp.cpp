@@ -43,10 +43,10 @@ public:
 		m_pVertexArray->setIndexBuffer(m_pIndexBuffer);
 	}
 
-	void onUpdate() override
+	void onUpdate(Marx::Timestep ts) override
 	{
 		static float rotation = 0.0f;
-		rotation += 0.1f;
+		rotation += 90.0f * ts;
 		Marx::RenderCommand::setClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		Marx::RenderCommand::clear();
 
@@ -85,8 +85,8 @@ private:
 	std::shared_ptr<Marx::VertexBuffer> m_pVertexBuffer;
 	std::shared_ptr<Marx::VertexArray> m_pVertexArray;
 	Marx::OrthographicCamera m_camera;
-	float m_mouseX;
-	float m_mouseY;
+	float m_mouseX = 0.0f;
+	float m_mouseY = 0.0f;
 };
 
 class Sandbox : public Marx::Application
